@@ -1,617 +1,730 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Micah 6:1–8 | Hebrew Lesson</title>
-  <style>
-    :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --surface2: #22263a;
-      --border: #2e3350;
-      --accent: #7c6af7;
-      --accent2: #5bc8af;
-      --gold: #e8b84b;
-      --text: #e8eaf0;
-      --muted: #8890aa;
-      --radius: 14px;
-      --card-shadow: 0 4px 24px rgba(0,0,0,0.4);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Micah 6:1–8 | Hebrew Lesson</title>
+<style>
+:root{
+  --bg:#0f1117;--surface:#1a1d27;--s2:#22263a;--border:#2e3350;
+  --accent:#7c6af7;--a2:#5bc8af;--gold:#e8b84b;
+  --text:#e8eaf0;--muted:#8890aa;--r:14px;
+  --sh:0 4px 24px rgba(0,0,0,.4);
+  --he:1.8;--en:13px;
+}
+[data-theme="light"]{
+  --bg:#f5f4ef;--surface:#fff;--s2:#f0ede4;--border:#d4cfc4;
+  --accent:#5b4ed4;--a2:#2e9b82;--gold:#b8860b;
+  --text:#1a1a2e;--muted:#6b6880;--sh:0 4px 24px rgba(0,0,0,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .25s,color .25s}
 
-    nav {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      flex-wrap: wrap;
-    }
-    .nav-logo { font-size: 22px; font-weight: 700; color: var(--gold); padding: 14px 0; margin-right: 16px; letter-spacing: 1px; }
-    .nav-btn { background: none; border: none; color: var(--muted); cursor: pointer; padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; transition: all 0.2s; border-bottom: 2px solid transparent; }
-    .nav-btn:hover { color: var(--text); background: var(--surface2); }
-    .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: none; }
+/* NAV */
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;gap:4px;position:sticky;top:0;z-index:100;flex-wrap:wrap}
+.nav-back{font-size:12px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px;border:1px solid var(--border);margin-right:6px;transition:all .2s;white-space:nowrap}
+.nav-back:hover{color:var(--text);border-color:var(--accent)}
+.nav-logo{font-size:17px;font-weight:700;color:var(--gold);padding:12px 0;margin-right:6px;letter-spacing:1px}
+.nb{background:none;border:none;color:var(--muted);cursor:pointer;padding:9px 12px;border-radius:8px;font-size:12px;font-weight:500;transition:all .2s;border-bottom:2px solid transparent}
+.nb:hover{color:var(--text);background:var(--s2)}
+.nb.active{color:var(--accent);border-bottom-color:var(--accent);background:none}
+.theme-btn{margin-left:auto;background:var(--s2);border:1px solid var(--border);color:var(--text);cursor:pointer;padding:5px 12px;border-radius:20px;font-size:11px;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent)}
 
-    .section { display: none; padding: 32px 24px; max-width: 900px; margin: 0 auto; }
-    .section.active { display: block; }
-    h1 { font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
-    h2 { font-size: 20px; font-weight: 600; color: var(--accent2); margin-bottom: 20px; }
-    .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+/* SECTIONS */
+.sec{display:none;padding:26px 18px;max-width:920px;margin:0 auto}
+.sec.active{display:block}
+h1{font-size:24px;font-weight:700;color:var(--gold);margin-bottom:5px}
+.sub{color:var(--muted);font-size:12px;margin-bottom:26px}
 
-    /* PASSAGE */
-    .passage-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .verse { display: flex; gap: 16px; padding: 18px 24px; border-bottom: 1px solid var(--border); align-items: flex-start; }
-    .verse:last-child { border-bottom: none; }
-    .verse-num { min-width: 28px; height: 28px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 6px; }
-    .verse-content { flex: 1; }
-    .verse-hebrew { font-size: 21px; line-height: 2; direction: rtl; text-align: right; color: var(--text); margin-bottom: 8px; }
-    .verse-english { font-size: 14px; color: var(--muted); line-height: 1.6; font-style: italic; }
+/* PASSAGE */
+.pbox{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.verse{display:flex;gap:12px;padding:15px 20px;border-bottom:1px solid var(--border);align-items:flex-start}
+.verse:last-child{border-bottom:none}
+.vnum{min-width:24px;height:24px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:8px}
+.vc{flex:1}
+.vheb{font-size:calc(var(--en) * var(--he));line-height:2.1;direction:rtl;text-align:right;color:var(--text);margin-bottom:7px}
+.ven{font-size:var(--en);color:var(--muted);line-height:1.6;font-style:italic}
+/* clickable words */
+.hw{cursor:pointer;border-bottom:1px dotted var(--accent);border-radius:2px;transition:color .15s,background .15s;padding:0 1px}
+.hw:hover{color:var(--gold);background:rgba(124,106,247,.12);border-bottom-color:transparent}
 
-    /* VOCABULARY */
-    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
-    .vocab-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
-    .vocab-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow); border-color: var(--accent); }
-    .vocab-hebrew { font-size: 28px; direction: rtl; color: var(--gold); margin-bottom: 4px; line-height: 1.5; }
-    .vocab-trans { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-style: italic; }
-    .vocab-meaning { font-size: 15px; font-weight: 600; color: var(--text); }
-    .vocab-tag { display: inline-block; margin-top: 8px; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--surface2); color: var(--accent2); border: 1px solid var(--border); }
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:center;justify-content:center;padding:16px}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);max-width:430px;width:100%;padding:24px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .18s ease}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.mcls{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1}
+.mcls:hover{color:var(--text)}
+.mheb{font-size:48px;direction:rtl;color:var(--gold);margin-bottom:3px;line-height:1.3}
+.mlex{font-size:12px;color:var(--muted);margin-bottom:14px}
+.mlex span{color:var(--a2)}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.mf{background:var(--s2);border-radius:8px;padding:9px 11px}
+.ml{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.mv{font-size:13px;font-weight:600;color:var(--text)}
+.mparse{background:var(--s2);border-radius:8px;padding:9px 11px;margin-bottom:10px;border-left:3px solid var(--accent)}
+.mparse-text{font-size:12px;color:var(--a2);font-weight:500}
+.mdef{font-size:13px;color:var(--text);padding:9px 11px;background:rgba(91,200,175,.07);border-radius:8px;border:1px solid rgba(91,200,175,.18);line-height:1.5}
 
-    /* FLASHCARDS */
-    .flashcard-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-    .btn { padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s; }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { filter: brightness(1.15); }
-    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-    .btn-secondary:hover { background: var(--border); }
-    .progress-text { color: var(--muted); font-size: 14px; margin-left: auto; }
+/* VOCABULARY */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:11px}
+.vc2{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.vc2:hover{transform:translateY(-2px);box-shadow:var(--sh);border-color:var(--accent)}
+.vh{font-size:calc(var(--en) * var(--he));direction:rtl;color:var(--gold);margin-bottom:2px;line-height:1.4}
+.vroot{font-size:10px;color:var(--muted);margin-bottom:3px}
+.vtrans{font-size:10px;color:var(--muted);font-style:italic;margin-bottom:5px}
+.vmean{font-size:13px;font-weight:600;color:var(--text)}
+.vtags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.vtag{font-size:9px;padding:2px 6px;border-radius:20px;background:var(--s2);color:var(--a2);border:1px solid var(--border)}
 
-    .progress-bar-wrap { background: var(--surface2); border-radius: 20px; height: 6px; margin-bottom: 24px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 20px; transition: width 0.4s; }
+/* FLASHCARDS */
+.fcbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.btn{padding:8px 18px;border-radius:8px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover{filter:brightness(1.15)}
+.btn-s{background:var(--s2);color:var(--text);border:1px solid var(--border)}.btn-s:hover{background:var(--border)}
+.prog-t{color:var(--muted);font-size:12px;margin-left:auto}
+.prog-w{background:var(--s2);border-radius:20px;height:5px;margin-bottom:18px;overflow:hidden}
+.prog-f{height:100%;background:linear-gradient(90deg,var(--accent),var(--a2));border-radius:20px;transition:width .4s}
+.fcscene{perspective:1000px;margin:0 auto 22px;width:100%;max-width:500px;height:250px}
+.fcin{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
+.fcin.flipped{transform:rotateY(180deg)}
+.fcface{position:absolute;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px;border:1px solid var(--border);box-shadow:var(--sh)}
+.fcfront{background:linear-gradient(135deg,#1e2240,#2a2d4a)}
+[data-theme="light"] .fcfront{background:linear-gradient(135deg,#e4e0f5,#d0cbee)}
+.fcback{background:linear-gradient(135deg,#1a2e28,#1e2f35);transform:rotateY(180deg)}
+[data-theme="light"] .fcback{background:linear-gradient(135deg,#c8e8e0,#d4f0e8)}
+.fcheb{font-size:48px;direction:rtl;color:var(--gold);margin-bottom:8px;line-height:1.3}
+.fchint{font-size:11px;color:var(--muted)}
+.fcmean{font-size:22px;font-weight:700;color:var(--a2);margin-bottom:4px;text-align:center}
+.fctrans{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:8px}
+.fcparse{font-size:11px;color:var(--accent);text-align:center;margin-bottom:6px}
+.fcex{font-size:11px;color:var(--muted);text-align:center;direction:rtl;line-height:1.8}
+.fcnav{display:flex;justify-content:center;gap:12px}
 
-    .flashcard-scene { perspective: 1000px; margin: 0 auto 28px; width: 100%; max-width: 520px; height: 280px; }
-    .flashcard-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.5s; cursor: pointer; }
-    .flashcard-inner.flipped { transform: rotateY(180deg); }
-    .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px; border: 1px solid var(--border); box-shadow: var(--card-shadow); }
-    .flashcard-front { background: linear-gradient(135deg, #1e2240, #2a2d4a); }
-    .flashcard-back { background: linear-gradient(135deg, #1e2f35, #1a2e28); transform: rotateY(180deg); }
-    .card-hebrew { font-size: 52px; direction: rtl; color: var(--gold); margin-bottom: 10px; line-height: 1.3; }
-    .card-hint { font-size: 13px; color: var(--muted); }
-    .card-meaning { font-size: 28px; font-weight: 700; color: var(--accent2); margin-bottom: 6px; text-align: center; }
-    .card-trans { font-size: 15px; color: var(--muted); font-style: italic; margin-bottom: 12px; }
-    .card-example { font-size: 13px; color: var(--muted); text-align: center; direction: rtl; line-height: 1.8; }
-    .flashcard-nav { display: flex; justify-content: center; gap: 16px; }
+/* STORIES */
+.stabs{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
+.stab{padding:6px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:12px;font-weight:500;transition:all .2s}
+.stab:hover{color:var(--text)}
+.stab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.spanel{display:none}.spanel.active{display:block}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 26px}
+.stitle{font-size:18px;font-weight:700;color:var(--gold);margin-bottom:3px}
+.ssub{font-size:11px;color:var(--muted);margin-bottom:8px}
+.scontrols{display:flex;gap:8px;margin-bottom:16px}
+.ssen{margin-bottom:12px;padding:13px 16px;background:var(--s2);border-radius:10px;border-left:3px solid var(--accent)}
+.sheb{font-size:calc(var(--en) * var(--he));direction:rtl;text-align:right;color:var(--text);line-height:1.9;margin-bottom:6px}
+.shidden{display:none}.shidden.vis{display:block}
+.strans{font-size:10px;color:var(--muted);font-style:italic;margin-bottom:2px}
+.sen{font-size:12px;color:var(--text);margin-bottom:6px}
+.sfoot{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:7px}
+.schips{display:flex;flex-wrap:wrap;gap:4px;flex:1}
+.chip{font-size:9px;padding:2px 7px;border-radius:20px;background:rgba(124,106,247,.1);color:var(--accent);border:1px solid rgba(124,106,247,.2)}
+.byan{font-size:9px;padding:2px 7px;border-radius:20px;background:rgba(232,184,75,.08);color:var(--gold);border:1px solid rgba(232,184,75,.18)}
+.ttbtn{font-size:10px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
+.ttbtn:hover{border-color:var(--a2);color:var(--a2)}
 
-    /* STORIES */
-    .story-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-    .story-tab { padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
-    .story-tab:hover { color: var(--text); }
-    .story-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
-    .story-panel { display: none; }
-    .story-panel.active { display: block; }
-    .story-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; }
-    .story-title { font-size: 20px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
-    .story-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
-    .story-sentence { margin-bottom: 18px; padding: 16px 20px; background: var(--surface2); border-radius: 10px; border-left: 3px solid var(--accent); }
-    .sent-hebrew { font-size: 20px; direction: rtl; text-align: right; color: var(--text); margin-bottom: 6px; line-height: 1.9; }
-    .sent-trans { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 3px; }
-    .sent-english { font-size: 14px; color: var(--text); }
-    .sent-words { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .word-chip { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: rgba(124,106,247,0.12); color: var(--accent); border: 1px solid rgba(124,106,247,0.25); }
-
-    @media (max-width: 600px) {
-      .vocab-grid { grid-template-columns: 1fr 1fr; }
-      .card-hebrew { font-size: 38px; }
-      .card-meaning { font-size: 20px; }
-      .section { padding: 20px 14px; }
-      .story-card { padding: 20px 18px; }
-    }
-  </style>
+@media(max-width:600px){
+  .vgrid{grid-template-columns:1fr 1fr}
+  .fcheb{font-size:36px}.fcmean{font-size:17px}
+  .sec{padding:14px 10px}.scard{padding:14px}
+  .mgrid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
 <nav>
+  <a href="index.html" class="nav-back">← All Lessons</a>
   <div class="nav-logo">מִיכָה ו׳</div>
-  <button class="nav-btn active" onclick="showSection('passage', this)">📖 Passage</button>
-  <button class="nav-btn" onclick="showSection('vocab', this)">📚 Vocabulary</button>
-  <button class="nav-btn" onclick="showSection('flashcards', this)">🃏 Flashcards</button>
-  <button class="nav-btn" onclick="showSection('stories', this)">📜 Stories</button>
+  <button class="nb active" onclick="showSec('passage',this)">📖 Passage</button>
+  <button class="nb" onclick="showSec('vocab',this)">📚 Vocab</button>
+  <button class="nb" onclick="showSec('flash',this)">🃏 Flashcards</button>
+  <button class="nb" onclick="showSec('stories',this)">📜 Stories</button>
+  <button class="theme-btn" id="tbtn" onclick="toggleTheme()">☀️ Light</button>
 </nav>
 
-<!-- ═══════════════════════ PASSAGE ═══════════════════════ -->
-<div id="section-passage" class="section active">
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="mcls" onclick="closeModal()">×</button>
+    <div class="mheb" id="m-word"></div>
+    <div class="mlex" id="m-lex"></div>
+    <div class="mgrid">
+      <div class="mf"><div class="ml">Root</div><div class="mv" id="m-root"></div></div>
+      <div class="mf"><div class="ml">Stem</div><div class="mv" id="m-stem"></div></div>
+      <div class="mf"><div class="ml">Form</div><div class="mv" id="m-form"></div></div>
+      <div class="mf"><div class="ml">PGN</div><div class="mv" id="m-pgn"></div></div>
+    </div>
+    <div class="mparse"><div class="ml">Parsing</div><div class="mparse-text" id="m-parse"></div></div>
+    <div class="mdef" id="m-def"></div>
+  </div>
+</div>
+
+<!-- ══════════════ PASSAGE ══════════════ -->
+<div id="sec-passage" class="sec active">
   <h1>Micah 6:1–8</h1>
-  <p class="subtitle">מִיכָה ו׳:א׳–ח׳ &nbsp;·&nbsp; God's Case Against Israel & The Call to Justice</p>
+  <p class="sub">מִיכָה ו׳ · Tap any <span style="border-bottom:1px dotted var(--accent);color:var(--accent)">highlighted word</span> to see its parsing</p>
+  <div class="pbox">
 
-  <div class="passage-box">
     <div class="verse">
-      <div class="verse-num">1</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">שִׁמְעוּ־נָ֕א אֵ֥ת אֲשֶׁר־יְהוָ֖ה אֹמֵ֑ר קוּם רִ֣יב אֶת־הֶהָרִ֔ים וְתִשְׁמַ֥עְנָה הַגְּבָע֖וֹת קוֹלֶֽךָ׃</div>
-        <div class="verse-english">Hear now what the LORD is saying: "Arise, plead your case before the mountains, and let the hills hear your voice."</div>
+      <div class="vnum">1</div>
+      <div class="vc">
+        <div class="vheb"><span class="hw" data-w="שִׁמְעוּ">שִׁמְעוּ</span>־נָא אֵת אֲשֶׁר־יְהוָה אֹמֵר <span class="hw" data-w="קוּם">קוּם</span> <span class="hw" data-w="רִיב">רִיב</span> אֶת־<span class="hw" data-w="הֶהָרִים">הֶהָרִים</span> וְ<span class="hw" data-w="תִשְׁמַעְנָה">תִשְׁמַעְנָה</span> <span class="hw" data-w="הַגְּבָעוֹת">הַגְּבָעוֹת</span> קוֹלֶךָ׃</div>
+        <div class="ven">Hear now what the LORD is saying: "Arise, plead your case before the mountains, and let the hills hear your voice."</div>
       </div>
     </div>
+
     <div class="verse">
-      <div class="verse-num">2</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">שִׁמְעוּ הָרִים אֶת־רִיב יְהוָה וְהָאֵתָנִים מֹסְדֵי אָרֶץ כִּי רִיב לַיהוָה עִם־עַמּוֹ וְעִם־יִשְׂרָאֵל יִתְוַכָּח׃</div>
-        <div class="verse-english">Listen, you mountains, to the LORD's case; and you enduring foundations of the earth. For the LORD has a case against His people; He will contend with Israel.</div>
+      <div class="vnum">2</div>
+      <div class="vc">
+        <div class="vheb"><span class="hw" data-w="שִׁמְעוּ">שִׁמְעוּ</span> <span class="hw" data-w="הָרִים">הָרִים</span> אֶת־<span class="hw" data-w="רִיב">רִיב</span> יְהוָה וְהָ<span class="hw" data-w="אֵתָנִים">אֵתָנִים</span> <span class="hw" data-w="מֹסְדֵי">מֹסְדֵי</span> <span class="hw" data-w="אָרֶץ">אָרֶץ</span> כִּי <span class="hw" data-w="רִיב">רִיב</span> לַיהוָה עִם־<span class="hw" data-w="עַמּוֹ">עַמּוֹ</span> וְעִם־יִשְׂרָאֵל <span class="hw" data-w="יִתְוַכָּח">יִתְוַכָּח</span>׃</div>
+        <div class="ven">Listen, O mountains, to the LORD's case; and you enduring foundations of the earth, for the LORD has a case against His people; He will contend with Israel.</div>
       </div>
     </div>
+
     <div class="verse">
-      <div class="verse-num">3</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">עַמִּי מֶה־עָשִׂיתִי לְךָ וּמָה הֶלְאֵתִיךָ עֲנֵה בִּי׃</div>
-        <div class="verse-english">"My people, what have I done to you? And how have I wearied you? Answer Me."</div>
+      <div class="vnum">3</div>
+      <div class="vc">
+        <div class="vheb"><span class="hw" data-w="עַמִּי">עַמִּי</span> מֶה־<span class="hw" data-w="עָשִׂיתִי">עָשִׂיתִי</span> לְךָ וּמָה <span class="hw" data-w="הֶלְאֵתִיךָ">הֶלְאֵתִיךָ</span> <span class="hw" data-w="עֲנֵה">עֲנֵה</span> בִּי׃</div>
+        <div class="ven">"My people, what have I done to you? And how have I wearied you? Answer Me."</div>
       </div>
     </div>
+
     <div class="verse">
-      <div class="verse-num">4</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">כִּי הֶעֱלִתִיךָ מֵאֶרֶץ מִצְרַיִם וּמִבֵּית עֲבָדִים פְּדִיתִיךָ וָאֶשְׁלַח לְפָנֶיךָ אֶת־מֹשֶׁה אַהֲרֹן וּמִרְיָם׃</div>
-        <div class="verse-english">"Indeed, I brought you up from the land of Egypt and ransomed you from the house of slavery, and I sent before you Moses, Aaron, and Miriam."</div>
+      <div class="vnum">4</div>
+      <div class="vc">
+        <div class="vheb">כִּי <span class="hw" data-w="הֶעֱלִתִיךָ">הֶעֱלִתִיךָ</span> מֵ<span class="hw" data-w="אֶרֶץ">אֶרֶץ</span> <span class="hw" data-w="מִצְרַיִם">מִצְרַיִם</span> וּמִבֵּית <span class="hw" data-w="עֲבָדִים">עֲבָדִים</span> <span class="hw" data-w="פְּדִיתִיךָ">פְּדִיתִיךָ</span> <span class="hw" data-w="וָאֶשְׁלַח">וָאֶשְׁלַח</span> לְפָנֶיךָ אֶת־מֹשֶׁה אַהֲרֹן וּמִרְיָם׃</div>
+        <div class="ven">"Indeed, I brought you up from the land of Egypt and ransomed you from the house of slavery, and I sent before you Moses, Aaron, and Miriam."</div>
       </div>
     </div>
+
     <div class="verse">
-      <div class="verse-num">5</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">עַמִּי זְכָר־נָא מַה־יָּעַץ בָּלָק מֶלֶךְ מוֹאָב וּמֶה־עָנָה אֹתוֹ בִּלְעָם בֶּן־בְּעוֹר מִן־הַשִּׁטִּים עַד־הַגִּלְגָּל לְמַעַן דַּעַת צִדְקוֹת יְהוָה׃</div>
-        <div class="verse-english">"My people, remember now what Balak king of Moab counseled and what Balaam son of Beor answered him, from Shittim to Gilgal, so that you might know the righteous acts of the LORD."</div>
+      <div class="vnum">5</div>
+      <div class="vc">
+        <div class="vheb"><span class="hw" data-w="עַמִּי">עַמִּי</span> <span class="hw" data-w="זְכָר">זְכָר</span>־נָא מַה־<span class="hw" data-w="יָּעַץ">יָּעַץ</span> בָּלָק <span class="hw" data-w="מֶלֶךְ">מֶלֶךְ</span> מוֹאָב וּמֶה־<span class="hw" data-w="עָנָה">עָנָה</span> אֹתוֹ בִּלְעָם בֶּן־בְּעוֹר מִן־הַשִּׁטִּים עַד־הַגִּלְגָּל לְמַעַן <span class="hw" data-w="דַּעַת">דַּעַת</span> <span class="hw" data-w="צִדְקוֹת">צִדְקוֹת</span> יְהוָה׃</div>
+        <div class="ven">"My people, remember now what Balak king of Moab counseled and what Balaam son of Beor answered him, from Shittim to Gilgal, so that you might know the righteous acts of the LORD."</div>
       </div>
     </div>
+
     <div class="verse">
-      <div class="verse-num">6</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">בַּמָּה אֲקַדֵּם יְהוָה אִכַּף לֵאלֹהֵי מָרוֹם הַאֲקַדְּמֶנּוּ בְעוֹלוֹת בַּעֲגָלִים בְּנֵי שָׁנָה׃</div>
-        <div class="verse-english">"With what shall I come before the LORD and bow myself before the God on high? Shall I come before Him with burnt offerings, with yearling calves?"</div>
+      <div class="vnum">6</div>
+      <div class="vc">
+        <div class="vheb">בַּמָּה <span class="hw" data-w="אֲקַדֵּם">אֲקַדֵּם</span> יְהוָה <span class="hw" data-w="אִכַּף">אִכַּף</span> לֵאלֹהֵי מָרוֹם <span class="hw" data-w="הַאֲקַדְּמֶנּוּ">הַאֲקַדְּמֶנּוּ</span> בְ<span class="hw" data-w="עוֹלוֹת">עוֹלוֹת</span> בַּ<span class="hw" data-w="עֲגָלִים">עֲגָלִים</span> בְּנֵי <span class="hw" data-w="שָׁנָה">שָׁנָה</span>׃</div>
+        <div class="ven">"With what shall I come before the LORD and bow myself before the God on high? Shall I come before Him with burnt offerings, with yearling calves?"</div>
       </div>
     </div>
+
     <div class="verse">
-      <div class="verse-num">7</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">הֲיִרְצֶה יְהוָה בְּאַלְפֵי אֵילִים בְּרִבְבוֹת נַחֲלֵי־שָׁמֶן הַאֶתֵּן בְּכוֹרִי פִּשְׁעִי פְּרִי בִטְנִי חַטַּאת נַפְשִׁי׃</div>
-        <div class="verse-english">"Will the LORD be pleased with thousands of rams, with ten thousand rivers of oil? Shall I present my firstborn for my rebellious acts, the fruit of my body for the sin of my soul?"</div>
+      <div class="vnum">7</div>
+      <div class="vc">
+        <div class="vheb">הֲ<span class="hw" data-w="יִרְצֶה">יִרְצֶה</span> יְהוָה בְּאַלְפֵי <span class="hw" data-w="אֵילִים">אֵילִים</span> בְּרִבְבוֹת <span class="hw" data-w="נַחֲלֵי">נַחֲלֵי</span>־<span class="hw" data-w="שָׁמֶן">שָׁמֶן</span> הַ<span class="hw" data-w="אֶתֵּן">אֶתֵּן</span> <span class="hw" data-w="בְּכוֹרִי">בְּכוֹרִי</span> <span class="hw" data-w="פִּשְׁעִי">פִּשְׁעִי</span> <span class="hw" data-w="פְּרִי">פְּרִי</span> <span class="hw" data-w="בִטְנִי">בִטְנִי</span> <span class="hw" data-w="חַטַּאת">חַטַּאת</span> <span class="hw" data-w="נַפְשִׁי">נַפְשִׁי</span>׃</div>
+        <div class="ven">"Will the LORD be pleased with thousands of rams, with ten thousand rivers of oil? Shall I give my firstborn for my rebellion, the fruit of my body for the sin of my soul?"</div>
       </div>
     </div>
+
     <div class="verse">
-      <div class="verse-num">8</div>
-      <div class="verse-content">
-        <div class="verse-hebrew">הִגִּיד לְךָ אָדָם מַה־טּוֹב וּמָה־יְהוָה דּוֹרֵשׁ מִמְּךָ כִּי אִם־עֲשׂוֹת מִשְׁפָּט וְאַהֲבַת חֶסֶד וְהַצְנֵעַ לֶכֶת עִם־אֱלֹהֶיךָ׃</div>
-        <div class="verse-english">He has told you, O man, what is good; and what does the LORD require of you but to do justice, to love kindness, and to walk humbly with your God?</div>
+      <div class="vnum">8</div>
+      <div class="vc">
+        <div class="vheb"><span class="hw" data-w="הִגִּיד">הִגִּיד</span> לְךָ <span class="hw" data-w="אָדָם">אָדָם</span> מַה־<span class="hw" data-w="טּוֹב">טּוֹב</span> וּמָה־יְהוָה <span class="hw" data-w="דּוֹרֵשׁ">דּוֹרֵשׁ</span> מִמְּךָ כִּי אִם־<span class="hw" data-w="עֲשׂוֹת">עֲשׂוֹת</span> <span class="hw" data-w="מִשְׁפָּט">מִשְׁפָּט</span> וְ<span class="hw" data-w="אַהֲבַת">אַהֲבַת</span> <span class="hw" data-w="חֶסֶד">חֶסֶד</span> וְ<span class="hw" data-w="הַצְנֵעַ">הַצְנֵעַ</span> <span class="hw" data-w="לֶכֶת">לֶכֶת</span> עִם־<span class="hw" data-w="אֱלֹהֶיךָ">אֱלֹהֶיךָ</span>׃</div>
+        <div class="ven">He has told you, O man, what is good; and what does the LORD require of you but to do justice, to love kindness, and to walk humbly with your God?</div>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- ═══════════════════════ VOCABULARY ═══════════════════════ -->
-<div id="section-vocab" class="section">
+<!-- ══════════════ VOCABULARY ══════════════ -->
+<div id="sec-vocab" class="sec">
   <h1>Vocabulary</h1>
-  <p class="subtitle">Key words from Micah 6:1–8 — 18 terms</p>
-
-  <div class="vocab-grid">
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">שָׁמַע</div>
-      <div class="vocab-trans">sha-MA</div>
-      <div class="vocab-meaning">to hear / to listen</div>
-      <span class="vocab-tag">verb</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">קוּם</div>
-      <div class="vocab-trans">kum</div>
-      <div class="vocab-meaning">to rise / arise</div>
-      <span class="vocab-tag">verb</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">רִיב</div>
-      <div class="vocab-trans">riv</div>
-      <div class="vocab-meaning">dispute / legal case / contention</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">הָרִים</div>
-      <div class="vocab-trans">ha-RIM</div>
-      <div class="vocab-meaning">mountains</div>
-      <span class="vocab-tag">noun pl.</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">גְּבָעוֹת</div>
-      <div class="vocab-trans">g'va-OT</div>
-      <div class="vocab-meaning">hills</div>
-      <span class="vocab-tag">noun pl.</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">עַם</div>
-      <div class="vocab-trans">am</div>
-      <div class="vocab-meaning">people / nation</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">אֶרֶץ</div>
-      <div class="vocab-trans">E-retz</div>
-      <div class="vocab-meaning">land / earth</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">פָּדָה</div>
-      <div class="vocab-trans">pa-DAH</div>
-      <div class="vocab-meaning">to redeem / to ransom</div>
-      <span class="vocab-tag">verb</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">זָכַר</div>
-      <div class="vocab-trans">za-KHAR</div>
-      <div class="vocab-meaning">to remember</div>
-      <span class="vocab-tag">verb</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">מֶלֶךְ</div>
-      <div class="vocab-trans">ME-lekh</div>
-      <div class="vocab-meaning">king</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">צְדָקָה</div>
-      <div class="vocab-trans">tz'da-KAH</div>
-      <div class="vocab-meaning">righteousness / righteous acts</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">עוֹלָה</div>
-      <div class="vocab-trans">o-LAH</div>
-      <div class="vocab-meaning">burnt offering</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">נֶפֶשׁ</div>
-      <div class="vocab-trans">NE-fesh</div>
-      <div class="vocab-meaning">soul / life / being</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">אָדָם</div>
-      <div class="vocab-trans">a-DAM</div>
-      <div class="vocab-meaning">man / humankind</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">טוֹב</div>
-      <div class="vocab-trans">tov</div>
-      <div class="vocab-meaning">good</div>
-      <span class="vocab-tag">adjective</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">מִשְׁפָּט</div>
-      <div class="vocab-trans">mish-PAT</div>
-      <div class="vocab-meaning">justice / judgment</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">חֶסֶד</div>
-      <div class="vocab-trans">HE-sed</div>
-      <div class="vocab-meaning">lovingkindness / steadfast love</div>
-      <span class="vocab-tag">noun</span>
-    </div>
-
-    <div class="vocab-card">
-      <div class="vocab-hebrew">הָלַךְ</div>
-      <div class="vocab-trans">ha-LAKH</div>
-      <div class="vocab-meaning">to walk / to go</div>
-      <span class="vocab-tag">verb</span>
-    </div>
-
-  </div>
+  <p class="sub">31 key words from Micah 6:1–8 · tap any card for full parsing</p>
+  <div class="vgrid" id="vgrid"></div>
 </div>
 
-<!-- ═══════════════════════ FLASHCARDS ═══════════════════════ -->
-<div id="section-flashcards" class="section">
+<!-- ══════════════ FLASHCARDS ══════════════ -->
+<div id="sec-flash" class="sec">
   <h1>Flashcards</h1>
-  <p class="subtitle">Click the card to flip it · Use arrows to navigate</p>
-
-  <div class="flashcard-controls">
-    <button class="btn btn-secondary" onclick="shuffleCards()">🔀 Shuffle</button>
-    <button class="btn btn-secondary" onclick="resetCards()">↺ Reset</button>
-    <span class="progress-text" id="fc-progress">1 / 18</span>
+  <p class="sub">31 cards · tap card to flip · includes parsing on back</p>
+  <div class="fcbar">
+    <button class="btn btn-s" onclick="shuffle()">🔀 Shuffle</button>
+    <button class="btn btn-s" onclick="resetFC()">↺ Reset</button>
+    <span class="prog-t" id="fcp">1 / 31</span>
   </div>
-
-  <div class="progress-bar-wrap">
-    <div class="progress-bar-fill" id="fc-bar" style="width: 5.5%"></div>
-  </div>
-
-  <div class="flashcard-scene" onclick="flipCard()">
-    <div class="flashcard-inner" id="fc-inner">
-      <div class="flashcard-face flashcard-front">
-        <div class="card-hebrew" id="fc-hebrew">שָׁמַע</div>
-        <div class="card-hint">tap to reveal</div>
+  <div class="prog-w"><div class="prog-f" id="fcb" style="width:3.2%"></div></div>
+  <div class="fcscene" onclick="flip()">
+    <div class="fcin" id="fcin">
+      <div class="fcface fcfront">
+        <div class="fcheb" id="fc-heb"></div>
+        <div class="fchint">tap to reveal</div>
       </div>
-      <div class="flashcard-face flashcard-back">
-        <div class="card-meaning" id="fc-meaning">to hear / to listen</div>
-        <div class="card-trans" id="fc-trans">sha-MA</div>
-        <div class="card-example" id="fc-example">שִׁמְעוּ הָרִים אֶת־רִיב יְהוָה<br><span style="font-style:italic;font-size:11px;direction:ltr;display:block;text-align:center">"Listen, O mountains, to the LORD's case"</span></div>
+      <div class="fcface fcback">
+        <div class="fcmean" id="fc-mean"></div>
+        <div class="fctrans" id="fc-trans"></div>
+        <div class="fcparse" id="fc-parse"></div>
+        <div class="fcex" id="fc-ex"></div>
       </div>
     </div>
   </div>
-
-  <div class="flashcard-nav">
-    <button class="btn btn-secondary" onclick="prevCard()">← Prev</button>
-    <button class="btn btn-primary" onclick="nextCard()">Next →</button>
+  <div class="fcnav">
+    <button class="btn btn-s" onclick="prevC()">← Prev</button>
+    <button class="btn btn-p" onclick="nextC()">Next →</button>
   </div>
 </div>
 
-<!-- ═══════════════════════ STORIES ═══════════════════════ -->
-<div id="section-stories" class="section">
+<!-- ══════════════ STORIES ══════════════ -->
+<div id="sec-stories" class="sec">
   <h1>Stories</h1>
-  <p class="subtitle">Three short stories using vocabulary from Micah 6:1–8 in simple sentences</p>
-
-  <div class="story-tabs">
-    <button class="story-tab active" onclick="showStory(1, this)">Story 1: The Mountains</button>
-    <button class="story-tab" onclick="showStory(2, this)">Story 2: The King's Question</button>
-    <button class="story-tab" onclick="showStory(3, this)">Story 3: What is Good</button>
+  <p class="sub">Translations hidden by default · tap per sentence or use Show All</p>
+  <div class="stabs">
+    <button class="stab active" onclick="showStory(1,this)">1 · שְׁמַע יִשְׂרָאֵל</button>
+    <button class="stab" onclick="showStory(2,this)">2 · מַה עָשָׂה יְהוָה</button>
+    <button class="stab" onclick="showStory(3,this)">3 · מַה יְהוָה דּוֹרֵשׁ</button>
   </div>
 
-  <!-- STORY 1 -->
-  <div class="story-panel active" id="story-1">
-    <div class="story-card">
-      <div class="story-title">הָרִים שׁוֹמְעִים — The Mountains Listen</div>
-      <div class="story-subtitle">God calls His people to hear. Even the mountains and hills are called as witnesses.</div>
-
-      <div class="story-sentence">
-        <div class="sent-hebrew">אֱלֹהִים אוֹמֵר: שִׁמְעוּ!</div>
-        <div class="sent-trans">Elohim omer: Shim'u!</div>
-        <div class="sent-english">God says: "Listen!"</div>
-        <div class="sent-words"><span class="word-chip">שָׁמַע — hear</span><span class="word-chip">אֱלֹהִים — God</span></div>
+  <!-- Story 1 -->
+  <div class="spanel active" id="sp-1">
+    <div class="scard">
+      <div class="stitle">שְׁמַע יִשְׂרָאֵל — Hear, O Israel</div>
+      <div class="ssub">Qal forms · verbs of hearing, rising, answering, remembering</div>
+      <div class="scontrols">
+        <button class="btn btn-s" style="font-size:11px;padding:5px 12px" onclick="showAll(1)">Show All</button>
+        <button class="btn btn-s" style="font-size:11px;padding:5px 12px" onclick="hideAll(1)">Hide All</button>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">הָרִים גְּדוֹלִים עוֹמְדִים עַל הָאָרֶץ.</div>
-        <div class="sent-trans">Ha-harim g'dolim omédim al ha-aretz.</div>
-        <div class="sent-english">The great mountains stand upon the earth.</div>
-        <div class="sent-words"><span class="word-chip">הָרִים — mountains</span><span class="word-chip">אֶרֶץ — earth</span></div>
+      <div class="ssen">
+        <div class="sheb">יְהוָה קָרָא אֶל עַמּוֹ: שִׁמְעוּ הָרִים וְהַגְּבָעוֹת!</div>
+        <div class="shidden" id="s1-1">
+          <div class="strans">Adonai kara el amo: Shim'u ha-harim v'ha-g'va'ot!</div>
+          <div class="sen">The LORD called to His people: "Hear, O mountains and hills!"</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">שָׁמַע</span><span class="chip">הָרִים</span><span class="chip">גְּבָעוֹת</span><span class="chip">עַם</span></div><span class="byan">Qal Impv</span><button class="ttbtn" onclick="tt(this,'s1-1')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">הַגְּבָעוֹת שׁוֹמְעוֹת אֶת קוֹל יְהוָה.</div>
-        <div class="sent-trans">Ha-g'va'ot shom'ot et kol Adonai.</div>
-        <div class="sent-english">The hills hear the voice of the LORD.</div>
-        <div class="sent-words"><span class="word-chip">גְּבָעוֹת — hills</span><span class="word-chip">שָׁמַע — hear</span></div>
+      <div class="ssen">
+        <div class="sheb">הוּא אָמַר: קוּם וְרִב אֶת הֶהָרִים עַל דְּבַר עַמִּי.</div>
+        <div class="shidden" id="s1-2">
+          <div class="strans">Hu amar: Kum v'riv et he-harim al d'var ami.</div>
+          <div class="sen">He said: "Arise and plead the case before the mountains concerning my people."</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">קוּם</span><span class="chip">רִיב</span><span class="chip">הָרִים</span><span class="chip">עַם</span></div><span class="byan">Qal Impv</span><button class="ttbtn" onclick="tt(this,'s1-2')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">יְהוָה קָם וְרָב עִם עַמּוֹ.</div>
-        <div class="sent-trans">Adonai kam v'rav im amo.</div>
-        <div class="sent-english">The LORD arises and has a case against His people.</div>
-        <div class="sent-words"><span class="word-chip">קוּם — arise</span><span class="word-chip">רִיב — case</span><span class="word-chip">עַם — people</span></div>
+      <div class="ssen">
+        <div class="sheb">הָרִים הַגְּדוֹלִים שָׁמְעוּ אֶת קוֹל יְהוָה. גַּם הַגְּבָעוֹת שָׁמְעוּ.</div>
+        <div class="shidden" id="s1-3">
+          <div class="strans">Ha-harim ha-g'dolim sham'u et kol Adonai. Gam ha-g'va'ot sham'u.</div>
+          <div class="sen">The great mountains heard the voice of the LORD. The hills also heard.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">שָׁמַע</span><span class="chip">הָרִים</span><span class="chip">גְּבָעוֹת</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s1-3')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">הָעַם לֹא שָׁמַע. הָעַם לֹא זָכַר.</div>
-        <div class="sent-trans">Ha-am lo shama. Ha-am lo zakhar.</div>
-        <div class="sent-english">The people did not listen. The people did not remember.</div>
-        <div class="sent-words"><span class="word-chip">שָׁמַע — hear</span><span class="word-chip">זָכַר — remember</span><span class="word-chip">עַם — people</span></div>
+      <div class="ssen">
+        <div class="sheb">יְהוָה שָׁאַל אֶת עַמּוֹ: מֶה עָשִׂיתִי לְךָ? מֶה הֶלְאֵתִיךָ?</div>
+        <div class="shidden" id="s1-4">
+          <div class="strans">Adonai sha'al et amo: Meh asiti lekha? Meh hel'etikha?</div>
+          <div class="sen">The LORD asked His people: "What have I done to you? How have I wearied you?"</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">עָשָׂה</span><span class="chip">עַם</span></div><span class="byan">Qal Perf · Hiphil Perf</span><button class="ttbtn" onclick="tt(this,'s1-4')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">אֲבָל יְהוָה פָּדָה אֶת עַמּוֹ מֵאֶרֶץ מִצְרַיִם.</div>
-        <div class="sent-trans">Aval Adonai padah et amo me-eretz Mitzrayim.</div>
-        <div class="sent-english">But the LORD redeemed His people from the land of Egypt.</div>
-        <div class="sent-words"><span class="word-chip">פָּדָה — redeem</span><span class="word-chip">עַם — people</span><span class="word-chip">אֶרֶץ — land</span></div>
+      <div class="ssen">
+        <div class="sheb">הָעַם לֹא עָנָה. הָעַם לֹא שָׁמַע אֶת קוֹל יְהוָה בָּאָרֶץ.</div>
+        <div class="shidden" id="s1-5">
+          <div class="strans">Ha-am lo anah. Ha-am lo shama et kol Adonai ba-aretz.</div>
+          <div class="sen">The people did not answer. The people did not hear the voice of the LORD in the land.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">עַם</span><span class="chip">עָנָה</span><span class="chip">שָׁמַע</span><span class="chip">אֶרֶץ</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s1-5')">Show ▾</button></div>
       </div>
+
+      <div class="ssen">
+        <div class="sheb">אֲבָל יְהוָה זָכַר אֶת עַמּוֹ. הוּא לֹא שָׁכַח אֶת עַמּוֹ בָּאָרֶץ.</div>
+        <div class="shidden" id="s1-6">
+          <div class="strans">Aval Adonai zakhar et amo. Hu lo shakakh et amo ba-aretz.</div>
+          <div class="sen">But the LORD remembered His people. He did not forget His people in the land.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">זָכַר</span><span class="chip">עַם</span><span class="chip">אֶרֶץ</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s1-6')">Show ▾</button></div>
+      </div>
+
+      <div class="ssen">
+        <div class="sheb">יְהוָה עָשָׂה טוֹב לְעַמּוֹ. הוּא עָשָׂה מִשְׁפָּט בָּאָרֶץ.</div>
+        <div class="shidden" id="s1-7">
+          <div class="strans">Adonai asah tov l'amo. Hu asah mishpat ba-aretz.</div>
+          <div class="sen">The LORD did good for His people. He performed justice in the land.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">עָשָׂה</span><span class="chip">טוֹב</span><span class="chip">עַם</span><span class="chip">מִשְׁפָּט</span><span class="chip">אֶרֶץ</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s1-7')">Show ▾</button></div>
+      </div>
+
+      <div class="ssen">
+        <div class="sheb">עַמִּי, שִׁמְעוּ! זִכְרוּ! עֲנוּ! יְהוָה דּוֹרֵשׁ אֶת עַמּוֹ הַשּׁוֹמֵעַ.</div>
+        <div class="shidden" id="s1-8">
+          <div class="strans">Ami, shim'u! Zikru! Anu! Adonai doresh et amo ha-shomea.</div>
+          <div class="sen">My people, hear! Remember! Answer! The LORD seeks His people who listen.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">עַם</span><span class="chip">שָׁמַע</span><span class="chip">זָכַר</span><span class="chip">עָנָה</span><span class="chip">דָּרַשׁ</span></div><span class="byan">Qal Impv · Ptc</span><button class="ttbtn" onclick="tt(this,'s1-8')">Show ▾</button></div>
+      </div>
+
     </div>
   </div>
 
-  <!-- STORY 2 -->
-  <div class="story-panel" id="story-2">
-    <div class="story-card">
-      <div class="story-title">שְׁאֵלַת הַמֶּלֶךְ — The King's Question</div>
-      <div class="story-subtitle">A king asks what he can bring before God. He thinks offerings are the answer — but he is wrong.</div>
-
-      <div class="story-sentence">
-        <div class="sent-hebrew">יֵשׁ מֶלֶךְ גָּדוֹל בָּאָרֶץ.</div>
-        <div class="sent-trans">Yesh melekh gadol ba-aretz.</div>
-        <div class="sent-english">There is a great king in the land.</div>
-        <div class="sent-words"><span class="word-chip">מֶלֶךְ — king</span><span class="word-chip">אֶרֶץ — land</span></div>
+  <!-- Story 2 -->
+  <div class="spanel" id="sp-2">
+    <div class="scard">
+      <div class="stitle">מַה עָשָׂה יְהוָה — What God Has Done</div>
+      <div class="ssub">Hiphil &amp; Perfect forms · redemption, sending, knowing</div>
+      <div class="scontrols">
+        <button class="btn btn-s" style="font-size:11px;padding:5px 12px" onclick="showAll(2)">Show All</button>
+        <button class="btn btn-s" style="font-size:11px;padding:5px 12px" onclick="hideAll(2)">Hide All</button>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">הַמֶּלֶךְ שׁוֹאֵל: בַּמָּה אֲקַדֵּם אֶת יְהוָה?</div>
-        <div class="sent-trans">Ha-melekh sho'el: Bamah akaddem et Adonai?</div>
-        <div class="sent-english">The king asks: "With what shall I come before the LORD?"</div>
-        <div class="sent-words"><span class="word-chip">מֶלֶךְ — king</span></div>
+      <div class="ssen">
+        <div class="sheb">יְהוָה הֶעֱלָה אֶת עַמּוֹ מֵאֶרֶץ מִצְרַיִם. הוּא הֶעֱלָה אוֹתָם בְּיָד חֲזָקָה.</div>
+        <div class="shidden" id="s2-1">
+          <div class="strans">Adonai he'elah et amo me-eretz Mitzrayim. Hu he'elah otam b'yad khazakah.</div>
+          <div class="sen">The LORD brought His people up from the land of Egypt. He brought them up with a strong hand.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">עָלָה Hiph</span><span class="chip">עַם</span><span class="chip">אֶרֶץ</span><span class="chip">מִצְרַיִם</span></div><span class="byan">Hiphil Perf</span><button class="ttbtn" onclick="tt(this,'s2-1')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">הוּא חוֹשֵׁב: אֶתֵּן עוֹלוֹת לֵאלֹהִים.</div>
-        <div class="sent-trans">Hu khoshev: Eten olot l'Elohim.</div>
-        <div class="sent-english">He thinks: "I will give burnt offerings to God."</div>
-        <div class="sent-words"><span class="word-chip">עוֹלָה — burnt offering</span></div>
+      <div class="ssen">
+        <div class="sheb">הָעַם הָיָה בְּבֵית עֲבָדִים. יְהוָה פָּדָה אֶת עַמּוֹ מִיַּד עֲבָדִים.</div>
+        <div class="shidden" id="s2-2">
+          <div class="strans">Ha-am hayah b'veit avadim. Adonai padah et amo mi-yad avadim.</div>
+          <div class="sen">The people were in the house of slaves. The LORD redeemed His people from the hand of slavery.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">עֶבֶד</span><span class="chip">פָּדָה</span><span class="chip">עַם</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s2-2')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">אֲבָל יְהוָה לֹא רוֹצֶה עוֹלוֹת רַבּוֹת.</div>
-        <div class="sent-trans">Aval Adonai lo rotzeh olot rabot.</div>
-        <div class="sent-english">But the LORD does not want many burnt offerings.</div>
-        <div class="sent-words"><span class="word-chip">עוֹלָה — burnt offering</span></div>
+      <div class="ssen">
+        <div class="sheb">הוּא שָׁלַח אֶת מֹשֶׁה לִפְנֵי הָעָם. הוּא שָׁלַח גַּם אֶת אַהֲרֹן וְאֶת מִרְיָם.</div>
+        <div class="shidden" id="s2-3">
+          <div class="strans">Hu shalakh et Moshe lifnei ha-am. Hu shalakh gam et Aharon v'et Miryam.</div>
+          <div class="sen">He sent Moses before the people. He also sent Aaron and Miriam.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">שָׁלַח</span><span class="chip">עַם</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s2-3')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">יְהוָה דּוֹרֵשׁ מִשְׁפָּט וְחֶסֶד.</div>
-        <div class="sent-trans">Adonai doresh mishpat v'hesed.</div>
-        <div class="sent-english">The LORD requires justice and lovingkindness.</div>
-        <div class="sent-words"><span class="word-chip">מִשְׁפָּט — justice</span><span class="word-chip">חֶסֶד — lovingkindness</span></div>
+      <div class="ssen">
+        <div class="sheb">יְהוָה אָמַר: עַמִּי, זְכֹר אֵת כָּל אֲשֶׁר פָּדִיתִיךָ וְהֶעֱלִתִיךָ!</div>
+        <div class="shidden" id="s2-4">
+          <div class="strans">Adonai amar: Ami, z'khor et kol asher padítikha v'he'elítikha!</div>
+          <div class="sen">The LORD said: "My people, remember all that I redeemed you and brought you up!"</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">עַם</span><span class="chip">זָכַר</span><span class="chip">פָּדָה</span><span class="chip">עָלָה Hiph</span></div><span class="byan">Qal Impv · Hiphil Perf</span><button class="ttbtn" onclick="tt(this,'s2-4')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">הַמֶּלֶךְ שׁוֹמֵעַ וְזוֹכֵר אֶת דִּבְרֵי יְהוָה.</div>
-        <div class="sent-trans">Ha-melekh shomea v'zokher et divrei Adonai.</div>
-        <div class="sent-english">The king hears and remembers the words of the LORD.</div>
-        <div class="sent-words"><span class="word-chip">שָׁמַע — hear</span><span class="word-chip">זָכַר — remember</span><span class="word-chip">מֶלֶךְ — king</span></div>
+      <div class="ssen">
+        <div class="sheb">הָעַם זָכַר אֶת צִדְקוֹת יְהוָה. הֵם יָדְעוּ כִּי יְהוָה עָשָׂה טוֹב לָהֶם.</div>
+        <div class="shidden" id="s2-5">
+          <div class="strans">Ha-am zakhar et tzidkot Adonai. Hem yad'u ki Adonai asah tov lahem.</div>
+          <div class="sen">The people remembered the righteous acts of the LORD. They knew that the LORD had done good for them.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">זָכַר</span><span class="chip">צְדָקָה</span><span class="chip">יָדַע</span><span class="chip">עָשָׂה</span><span class="chip">טוֹב</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s2-5')">Show ▾</button></div>
       </div>
+
+      <div class="ssen">
+        <div class="sheb">יְהוָה הִגִּיד לְעַמּוֹ: אֲנִי פְּדִיתִי אֶתְכֶם. אֲנִי שָׁלַחְתִּי לִפְנֵיכֶם.</div>
+        <div class="shidden" id="s2-6">
+          <div class="strans">Adonai higid l'amo: Ani paditi etkhem. Ani shalakhti lifneikhem.</div>
+          <div class="sen">The LORD declared to His people: "I redeemed you. I sent before you."</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">נָגַד Hiph</span><span class="chip">עַם</span><span class="chip">פָּדָה</span><span class="chip">שָׁלַח</span></div><span class="byan">Hiphil Perf · Qal Perf</span><button class="ttbtn" onclick="tt(this,'s2-6')">Show ▾</button></div>
+      </div>
+
+      <div class="ssen">
+        <div class="sheb">הוּא לֹא שָׁלַח עוֹלוֹת. הוּא שָׁלַח מִשְׁפָּט וְחֶסֶד לָעַם בָּאָרֶץ.</div>
+        <div class="shidden" id="s2-7">
+          <div class="strans">Hu lo shalakh olot. Hu shalakh mishpat v'hesed la-am ba-aretz.</div>
+          <div class="sen">He did not send burnt offerings. He sent justice and lovingkindness to the people in the land.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">שָׁלַח</span><span class="chip">עוֹלָה</span><span class="chip">מִשְׁפָּט</span><span class="chip">חֶסֶד</span><span class="chip">עַם</span><span class="chip">אֶרֶץ</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s2-7')">Show ▾</button></div>
+      </div>
+
+      <div class="ssen">
+        <div class="sheb">הָעַם שָׁמַע, זָכַר, וְיָדַע: יְהוָה עָשָׂה טוֹב לָנוּ. הוּא פָּדָה נַפְשֵׁנוּ.</div>
+        <div class="shidden" id="s2-8">
+          <div class="strans">Ha-am shama, zakhar, v'yada: Adonai asah tov lanu. Hu padah nafsheinu.</div>
+          <div class="sen">The people heard, remembered, and knew: The LORD did good for us. He redeemed our souls.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">שָׁמַע</span><span class="chip">זָכַר</span><span class="chip">יָדַע</span><span class="chip">עָשָׂה</span><span class="chip">טוֹב</span><span class="chip">פָּדָה</span><span class="chip">נֶפֶשׁ</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s2-8')">Show ▾</button></div>
+      </div>
+
     </div>
   </div>
 
-  <!-- STORY 3 -->
-  <div class="story-panel" id="story-3">
-    <div class="story-card">
-      <div class="story-title">מַה־טּוֹב — What Is Good</div>
-      <div class="story-subtitle">A man learns the three things God truly requires: justice, kindness, and humble walking.</div>
-
-      <div class="story-sentence">
-        <div class="sent-hebrew">אָדָם שׁוֹאֵל: מַה טּוֹב?</div>
-        <div class="sent-trans">Adam sho'el: Mah tov?</div>
-        <div class="sent-english">A man asks: "What is good?"</div>
-        <div class="sent-words"><span class="word-chip">אָדָם — man</span><span class="word-chip">טוֹב — good</span></div>
+  <!-- Story 3 -->
+  <div class="spanel" id="sp-3">
+    <div class="scard">
+      <div class="stitle">מַה יְהוָה דּוֹרֵשׁ — What God Requires</div>
+      <div class="ssub">Mixed binyanim · justice, love, humility · Micah 6:8 vocabulary mastery</div>
+      <div class="scontrols">
+        <button class="btn btn-s" style="font-size:11px;padding:5px 12px" onclick="showAll(3)">Show All</button>
+        <button class="btn btn-s" style="font-size:11px;padding:5px 12px" onclick="hideAll(3)">Hide All</button>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">יְהוָה הִגִּיד לָאָדָם מַה טּוֹב.</div>
-        <div class="sent-trans">Adonai higid la-adam mah tov.</div>
-        <div class="sent-english">The LORD has declared to the man what is good.</div>
-        <div class="sent-words"><span class="word-chip">אָדָם — man</span><span class="word-chip">טוֹב — good</span></div>
+      <div class="ssen">
+        <div class="sheb">אָדָם שָׁאַל: מַה טּוֹב? מַה יְהוָה דּוֹרֵשׁ מִמֶּנִּי?</div>
+        <div class="shidden" id="s3-1">
+          <div class="strans">Adam sha'al: Mah tov? Mah Adonai doresh mimeni?</div>
+          <div class="sen">A man asked: "What is good? What does the LORD require of me?"</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">אָדָם</span><span class="chip">טוֹב</span><span class="chip">דָּרַשׁ Ptc</span></div><span class="byan">Qal Ptc</span><button class="ttbtn" onclick="tt(this,'s3-1')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">רִאשׁוֹן: עֲשֵׂה מִשְׁפָּט. שְׁנִי: אֱהַב חֶסֶד.</div>
-        <div class="sent-trans">Rishon: Aseh mishpat. Sheni: Ehav hesed.</div>
-        <div class="sent-english">First: Do justice. Second: Love kindness.</div>
-        <div class="sent-words"><span class="word-chip">מִשְׁפָּט — justice</span><span class="word-chip">חֶסֶד — lovingkindness</span></div>
+      <div class="ssen">
+        <div class="sheb">יְהוָה הִגִּיד לָאָדָם: שְׁמַע! אֲנִי אַגִּיד לְךָ מַה טּוֹב.</div>
+        <div class="shidden" id="s3-2">
+          <div class="strans">Adonai higid la-adam: Sh'ma! Ani agid l'kha mah tov.</div>
+          <div class="sen">The LORD declared to the man: "Listen! I will declare to you what is good."</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">נָגַד Hiph</span><span class="chip">אָדָם</span><span class="chip">שָׁמַע</span><span class="chip">טוֹב</span></div><span class="byan">Hiphil Perf · Impf</span><button class="ttbtn" onclick="tt(this,'s3-2')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">שְׁלִישִׁי: לֵךְ בְּצָנֵעַ עִם אֱלֹהֶיךָ.</div>
-        <div class="sent-trans">Sh'lishi: Lekh b'tzanea im Elohekha.</div>
-        <div class="sent-english">Third: Walk humbly with your God.</div>
-        <div class="sent-words"><span class="word-chip">הָלַךְ — walk</span></div>
+      <div class="ssen">
+        <div class="sheb">יְהוָה דּוֹרֵשׁ עֲשׂוֹת מִשְׁפָּט — לַעֲשׂוֹת מִשְׁפָּט בָּאָרֶץ וּבַחַיִּים.</div>
+        <div class="shidden" id="s3-3">
+          <div class="strans">Adonai doresh asot mishpat — la'asot mishpat ba-aretz u-va-khayyim.</div>
+          <div class="sen">The LORD requires doing justice — to do justice in the land and in life.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">דָּרַשׁ</span><span class="chip">עָשָׂה</span><span class="chip">מִשְׁפָּט</span><span class="chip">אֶרֶץ</span></div><span class="byan">Qal Ptc · Inf Const</span><button class="ttbtn" onclick="tt(this,'s3-3')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">הָאָדָם הוֹלֵךְ בְּדֶרֶךְ טוֹבָה עִם אֱלֹהִים.</div>
-        <div class="sent-trans">Ha-adam holekh b'derekh tovah im Elohim.</div>
-        <div class="sent-english">The man walks on a good path with God.</div>
-        <div class="sent-words"><span class="word-chip">אָדָם — man</span><span class="word-chip">הָלַךְ — walk</span><span class="word-chip">טוֹב — good</span></div>
+      <div class="ssen">
+        <div class="sheb">הוּא דּוֹרֵשׁ אַהֲבַת חֶסֶד — לֶאֱהֹב חֶסֶד בְּכָל נֶפֶשׁ וּבְכָל לֵב.</div>
+        <div class="shidden" id="s3-4">
+          <div class="strans">Hu doresh ahavat hesed — le'ehov hesed b'khol nefesh u-v'khol lev.</div>
+          <div class="sen">He requires love of kindness — to love lovingkindness with every soul and heart.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">דָּרַשׁ</span><span class="chip">אַהֲבָה</span><span class="chip">חֶסֶד</span><span class="chip">נֶפֶשׁ</span></div><span class="byan">Qal Ptc · Inf Const</span><button class="ttbtn" onclick="tt(this,'s3-4')">Show ▾</button></div>
       </div>
 
-      <div class="story-sentence">
-        <div class="sent-hebrew">נַפְשׁוֹ שְׁלֵמָה כִּי הוּא עָשָׂה מִשְׁפָּט וְחֶסֶד.</div>
-        <div class="sent-trans">Nafsho sh'lemah ki hu asah mishpat v'hesed.</div>
-        <div class="sent-english">His soul is whole because he practiced justice and kindness.</div>
-        <div class="sent-words"><span class="word-chip">נֶפֶשׁ — soul</span><span class="word-chip">מִשְׁפָּט — justice</span><span class="word-chip">חֶסֶד — lovingkindness</span></div>
+      <div class="ssen">
+        <div class="sheb">הוּא דּוֹרֵשׁ הַצְנֵעַ לֶכֶת עִם אֱלֹהִים — לָלֶכֶת בְּצָנֵעַ בְּכָל יוֹם.</div>
+        <div class="shidden" id="s3-5">
+          <div class="strans">Hu doresh hatznea lekhet im Elohim — lalekhet b'tzanea b'khol yom.</div>
+          <div class="sen">He requires walking humbly with God — to walk humbly every day.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">דָּרַשׁ</span><span class="chip">צָנַע Hiph</span><span class="chip">הָלַךְ</span></div><span class="byan">Qal Ptc · Hiphil Inf · Qal Inf</span><button class="ttbtn" onclick="tt(this,'s3-5')">Show ▾</button></div>
       </div>
+
+      <div class="ssen">
+        <div class="sheb">הָאָדָם עָשָׂה מִשְׁפָּט. הָאָדָם אָהַב חֶסֶד. הָאָדָם הָלַךְ עִם אֱלֹהִים.</div>
+        <div class="shidden" id="s3-6">
+          <div class="strans">Ha-adam asah mishpat. Ha-adam ahav hesed. Ha-adam halakh im Elohim.</div>
+          <div class="sen">The man did justice. The man loved kindness. The man walked with God.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">אָדָם</span><span class="chip">עָשָׂה</span><span class="chip">מִשְׁפָּט</span><span class="chip">אַהֲבָה</span><span class="chip">חֶסֶד</span><span class="chip">הָלַךְ</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s3-6')">Show ▾</button></div>
+      </div>
+
+      <div class="ssen">
+        <div class="sheb">הוּא הָלַךְ בְּצָנֵעַ עִם אֱלֹהָיו. לֹא בְּעוֹלוֹת. לֹא בְּאֵילִים. רַק בְּאַהֲבָה וּבְחֶסֶד.</div>
+        <div class="shidden" id="s3-7">
+          <div class="strans">Hu halakh b'tzanea im Elohav. Lo v'olot. Lo v'eilim. Rak b'ahavah u-v'hesed.</div>
+          <div class="sen">He walked humbly with his God. Not with burnt offerings. Not with rams. Only with love and kindness.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">הָלַךְ</span><span class="chip">צָנַע</span><span class="chip">עוֹלָה</span><span class="chip">אַיִל</span><span class="chip">אַהֲבָה</span><span class="chip">חֶסֶד</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s3-7')">Show ▾</button></div>
+      </div>
+
+      <div class="ssen">
+        <div class="sheb">נַפְשׁוֹ שָׁלֵמָה כִּי שָׁמַע אֶת יְהוָה. הוּא יָדַע: זֶה טּוֹב — מִשְׁפָּט וְאַהֲבַת חֶסֶד.</div>
+        <div class="shidden" id="s3-8">
+          <div class="strans">Nafsho shalemah ki shama et Adonai. Hu yada: Zeh tov — mishpat v'ahavat hesed.</div>
+          <div class="sen">His soul was whole because he heard the LORD. He knew: this is good — justice and love of kindness.</div>
+        </div>
+        <div class="sfoot"><div class="schips"><span class="chip">נֶפֶשׁ</span><span class="chip">שָׁמַע</span><span class="chip">יָדַע</span><span class="chip">טוֹב</span><span class="chip">מִשְׁפָּט</span><span class="chip">אַהֲבָה</span><span class="chip">חֶסֶד</span></div><span class="byan">Qal Perf</span><button class="ttbtn" onclick="tt(this,'s3-8')">Show ▾</button></div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-  // ── NAV ──
-  function showSection(id, btn) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('section-' + id).classList.add('active');
-    btn.classList.add('active');
-  }
+// ── THEME ──
+function toggleTheme(){
+  const h=document.documentElement,t=h.getAttribute('data-theme');
+  const nxt=t==='dark'?'light':'dark';
+  h.setAttribute('data-theme',nxt);
+  document.getElementById('tbtn').textContent=nxt==='dark'?'☀️ Light':'🌙 Dark';
+}
 
-  // ── STORIES ──
-  function showStory(num, btn) {
-    document.querySelectorAll('.story-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.story-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('story-' + num).classList.add('active');
-    btn.classList.add('active');
-  }
+// ── NAV ──
+function showSec(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  btn.classList.add('active');
+}
 
-  // ── FLASHCARDS ──
-  const cards = [
-    { hebrew: 'שָׁמַע', trans: 'sha-MA', meaning: 'to hear / to listen', example: 'שִׁמְעוּ הָרִים אֶת־רִיב יְהוָה\n"Listen, O mountains, to the LORD\'s case"' },
-    { hebrew: 'קוּם', trans: 'kum', meaning: 'to rise / arise', example: 'קוּם רִיב אֶת־הֶהָרִים\n"Arise, plead your case before the mountains"' },
-    { hebrew: 'רִיב', trans: 'riv', meaning: 'dispute / legal case', example: 'כִּי רִיב לַיהוָה עִם־עַמּוֹ\n"The LORD has a case against His people"' },
-    { hebrew: 'הָרִים', trans: 'ha-RIM', meaning: 'mountains', example: 'שִׁמְעוּ הָרִים\n"Listen, O mountains"' },
-    { hebrew: 'גְּבָעוֹת', trans: 'g\'va-OT', meaning: 'hills', example: 'הַגְּבָעוֹת קוֹלֶךָ\n"Let the hills hear your voice"' },
-    { hebrew: 'עַם', trans: 'am', meaning: 'people / nation', example: 'עַמִּי מֶה עָשִׂיתִי לְךָ\n"My people, what have I done to you?"' },
-    { hebrew: 'אֶרֶץ', trans: 'E-retz', meaning: 'land / earth', example: 'מֵאֶרֶץ מִצְרַיִם\n"From the land of Egypt"' },
-    { hebrew: 'פָּדָה', trans: 'pa-DAH', meaning: 'to redeem / to ransom', example: 'פְּדִיתִיךָ\n"I redeemed you"' },
-    { hebrew: 'זָכַר', trans: 'za-KHAR', meaning: 'to remember', example: 'זְכָר־נָא\n"Remember now..."' },
-    { hebrew: 'מֶלֶךְ', trans: 'ME-lekh', meaning: 'king', example: 'בָּלָק מֶלֶךְ מוֹאָב\n"Balak king of Moab"' },
-    { hebrew: 'צְדָקָה', trans: 'tz\'da-KAH', meaning: 'righteousness / righteous acts', example: 'צִדְקוֹת יְהוָה\n"The righteous acts of the LORD"' },
-    { hebrew: 'עוֹלָה', trans: 'o-LAH', meaning: 'burnt offering', example: 'הַאֲקַדְּמֶנּוּ בְעוֹלוֹת\n"Shall I come before Him with burnt offerings?"' },
-    { hebrew: 'נֶפֶשׁ', trans: 'NE-fesh', meaning: 'soul / life / being', example: 'חַטַּאת נַפְשִׁי\n"The sin of my soul"' },
-    { hebrew: 'אָדָם', trans: 'a-DAM', meaning: 'man / humankind', example: 'הִגִּיד לְךָ אָדָם\n"He has told you, O man"' },
-    { hebrew: 'טוֹב', trans: 'tov', meaning: 'good', example: 'מַה־טּוֹב\n"What is good"' },
-    { hebrew: 'מִשְׁפָּט', trans: 'mish-PAT', meaning: 'justice / judgment', example: 'עֲשׂוֹת מִשְׁפָּט\n"To do justice"' },
-    { hebrew: 'חֶסֶד', trans: 'HE-sed', meaning: 'lovingkindness / steadfast love', example: 'אַהֲבַת חֶסֶד\n"To love kindness"' },
-    { hebrew: 'הָלַךְ', trans: 'ha-LAKH', meaning: 'to walk / to go', example: 'הַצְנֵעַ לֶכֶת עִם־אֱלֹהֶיךָ\n"To walk humbly with your God"' },
-  ];
+// ── LEXICON ──
+const LEX={
+  "שִׁמְעוּ":{d:"שִׁמְעוּ",root:"שׁ.מ.ע",lex:"שָׁמַע",stem:"Qal",form:"Imperative",pgn:"2mp",parse:"Qal Imperative 2nd masculine plural",def:"to hear, listen, obey"},
+  "תִשְׁמַעְנָה":{d:"תִשְׁמַעְנָה",root:"שׁ.מ.ע",lex:"שָׁמַע",stem:"Qal",form:"Imperfect",pgn:"3fp",parse:"Qal Imperfect 3rd feminine plural",def:"to hear, listen"},
+  "קוּם":{d:"קוּם",root:"ק.ו.מ",lex:"קוּם",stem:"Qal",form:"Imperative",pgn:"2ms",parse:"Qal Imperative 2nd masculine singular",def:"to arise, stand up, rise"},
+  "רִיב":{d:"רִיב",root:"ר.י.ב",lex:"רִיב",stem:"—",form:"Noun",pgn:"ms absolute",parse:"Noun masculine singular absolute",def:"dispute, legal case, contention"},
+  "הֶהָרִים":{d:"הֶהָרִים",root:"ה.ר.ר",lex:"הַר",stem:"—",form:"Noun",pgn:"mp absolute",parse:"Noun masculine plural absolute (with definite article)",def:"mountain, hill country"},
+  "הַגְּבָעוֹת":{d:"הַגְּבָעוֹת",root:"ג.ב.ע",lex:"גִּבְעָה",stem:"—",form:"Noun",pgn:"fp absolute",parse:"Noun feminine plural absolute (with definite article)",def:"hill"},
+  "הָרִים":{d:"הָרִים",root:"ה.ר.ר",lex:"הַר",stem:"—",form:"Noun",pgn:"mp absolute",parse:"Noun masculine plural absolute",def:"mountains, hills"},
+  "אֵתָנִים":{d:"הָאֵתָנִים",root:"א.י.ת.ן",lex:"אֵתָן",stem:"—",form:"Adjective/Noun",pgn:"mp absolute",parse:"Adjective masculine plural absolute",def:"enduring, perennial, permanent"},
+  "מֹסְדֵי":{d:"מֹסְדֵי",root:"י.ס.ד",lex:"מוֹסָד",stem:"—",form:"Noun",pgn:"mp construct",parse:"Noun masculine plural construct",def:"foundation, base"},
+  "אָרֶץ":{d:"אָרֶץ",root:"א.ר.ץ",lex:"אֶרֶץ",stem:"—",form:"Noun",pgn:"fs absolute",parse:"Noun feminine singular absolute",def:"land, earth, ground, country"},
+  "אֶרֶץ":{d:"אֶרֶץ",root:"א.ר.ץ",lex:"אֶרֶץ",stem:"—",form:"Noun",pgn:"fs absolute",parse:"Noun feminine singular absolute",def:"land, earth, ground, country"},
+  "עַמּוֹ":{d:"עַמּוֹ",root:"ע.מ.מ",lex:"עַם",stem:"—",form:"Noun",pgn:"ms + 3ms suffix",parse:"Noun masculine singular + 3rd masculine singular pronominal suffix",def:"people, nation (his people)"},
+  "יִתְוַכָּח":{d:"יִתְוַכָּח",root:"י.כ.ח",lex:"יָכַח",stem:"Hithpael",form:"Imperfect",pgn:"3ms",parse:"Hithpael Imperfect 3rd masculine singular",def:"to argue, dispute, contend, plead"},
+  "עַמִּי":{d:"עַמִּי",root:"ע.מ.מ",lex:"עַם",stem:"—",form:"Noun",pgn:"ms + 1cs suffix",parse:"Noun masculine singular + 1st common singular pronominal suffix",def:"people, nation (my people)"},
+  "עָשִׂיתִי":{d:"עָשִׂיתִי",root:"ע.שׂ.ה",lex:"עָשָׂה",stem:"Qal",form:"Perfect",pgn:"1cs",parse:"Qal Perfect 1st common singular",def:"to do, make, perform, act"},
+  "הֶלְאֵתִיךָ":{d:"הֶלְאֵתִיךָ",root:"ל.א.ה",lex:"לָאָה",stem:"Hiphil",form:"Perfect",pgn:"1cs + 2ms suffix",parse:"Hiphil Perfect 1st common singular + 2nd masculine singular suffix",def:"to weary, exhaust, make weary"},
+  "עֲנֵה":{d:"עֲנֵה",root:"ע.נ.ה",lex:"עָנָה",stem:"Qal",form:"Imperative",pgn:"2ms",parse:"Qal Imperative 2nd masculine singular",def:"to answer, respond, testify, witness"},
+  "הֶעֱלִתִיךָ":{d:"הֶעֱלִתִיךָ",root:"ע.ל.ה",lex:"עָלָה",stem:"Hiphil",form:"Perfect",pgn:"1cs + 2ms suffix",parse:"Hiphil Perfect 1st common singular + 2nd masculine singular suffix",def:"to bring up, cause to ascend (causative of עָלָה)"},
+  "מִצְרַיִם":{d:"מִצְרַיִם",root:"—",lex:"מִצְרַיִם",stem:"—",form:"Proper Noun",pgn:"—",parse:"Proper noun (place name) — dual form",def:"Egypt"},
+  "עֲבָדִים":{d:"עֲבָדִים",root:"ע.ב.ד",lex:"עֶבֶד",stem:"—",form:"Noun",pgn:"mp absolute",parse:"Noun masculine plural absolute",def:"slave, servant, worshiper"},
+  "פְּדִיתִיךָ":{d:"פְּדִיתִיךָ",root:"פ.ד.ה",lex:"פָּדָה",stem:"Qal",form:"Perfect",pgn:"1cs + 2ms suffix",parse:"Qal Perfect 1st common singular + 2nd masculine singular suffix",def:"to redeem, ransom, deliver"},
+  "וָאֶשְׁלַח":{d:"וָאֶשְׁלַח",root:"שׁ.ל.ח",lex:"שָׁלַח",stem:"Qal",form:"Imperfect (Wayyiqtol)",pgn:"1cs",parse:"Qal Imperfect 1st common singular (waw consecutive / wayyiqtol)",def:"to send, stretch out, release"},
+  "זְכָר":{d:"זְכָר",root:"ז.כ.ר",lex:"זָכַר",stem:"Qal",form:"Imperative",pgn:"2ms",parse:"Qal Imperative 2nd masculine singular",def:"to remember, recall, mention"},
+  "יָּעַץ":{d:"יָּעַץ",root:"י.ע.ץ",lex:"יָעַץ",stem:"Qal",form:"Perfect",pgn:"3ms",parse:"Qal Perfect 3rd masculine singular",def:"to counsel, advise, plan, devise"},
+  "מֶלֶךְ":{d:"מֶלֶךְ",root:"מ.ל.כ",lex:"מֶלֶךְ",stem:"—",form:"Noun",pgn:"ms construct",parse:"Noun masculine singular construct",def:"king, ruler"},
+  "עָנָה":{d:"עָנָה",root:"ע.נ.ה",lex:"עָנָה",stem:"Qal",form:"Perfect",pgn:"3ms",parse:"Qal Perfect 3rd masculine singular",def:"to answer, respond, testify"},
+  "דַּעַת":{d:"דַּעַת",root:"י.ד.ע",lex:"יָדַע",stem:"Qal",form:"Infinitive Construct",pgn:"—",parse:"Qal Infinitive Construct",def:"to know, understand, perceive"},
+  "צִדְקוֹת":{d:"צִדְקוֹת",root:"צ.ד.ק",lex:"צְדָקָה",stem:"—",form:"Noun",pgn:"fp construct",parse:"Noun feminine plural construct",def:"righteousness, righteous acts, saving deeds"},
+  "אֲקַדֵּם":{d:"אֲקַדֵּם",root:"ק.ד.מ",lex:"קָדַם",stem:"Piel",form:"Imperfect",pgn:"1cs",parse:"Piel Imperfect 1st common singular",def:"to come before, meet, confront, anticipate"},
+  "אִכַּף":{d:"אִכַּף",root:"כ.פ.פ",lex:"כָּפַף",stem:"Qal",form:"Imperfect",pgn:"1cs",parse:"Qal Imperfect 1st common singular",def:"to bow down, bend, stoop"},
+  "הַאֲקַדְּמֶנּוּ":{d:"הַאֲקַדְּמֶנּוּ",root:"ק.ד.מ",lex:"קָדַם",stem:"Piel",form:"Imperfect",pgn:"1cs + 3ms suffix",parse:"Piel Imperfect 1st common singular + 3rd masculine singular suffix",def:"to come before, meet, confront"},
+  "עוֹלוֹת":{d:"עוֹלוֹת",root:"ע.ל.ה",lex:"עוֹלָה",stem:"—",form:"Noun",pgn:"fp absolute",parse:"Noun feminine plural absolute",def:"burnt offering (lit. 'that which goes up')"},
+  "עֲגָלִים":{d:"עֲגָלִים",root:"ע.ג.ל",lex:"עֵגֶל",stem:"—",form:"Noun",pgn:"mp absolute",parse:"Noun masculine plural absolute",def:"calf, young bull, yearling"},
+  "שָׁנָה":{d:"שָׁנָה",root:"שׁ.נ.ה",lex:"שָׁנָה",stem:"—",form:"Noun",pgn:"fs absolute",parse:"Noun feminine singular absolute",def:"year"},
+  "יִרְצֶה":{d:"יִרְצֶה",root:"ר.צ.ה",lex:"רָצָה",stem:"Qal",form:"Imperfect",pgn:"3ms",parse:"Qal Imperfect 3rd masculine singular",def:"to be pleased with, accept, delight in, approve"},
+  "אֵילִים":{d:"אֵילִים",root:"א.י.ל",lex:"אַיִל",stem:"—",form:"Noun",pgn:"mp absolute",parse:"Noun masculine plural absolute",def:"ram, male sheep"},
+  "נַחֲלֵי":{d:"נַחֲלֵי",root:"נ.ח.ל",lex:"נַחַל",stem:"—",form:"Noun",pgn:"mp construct",parse:"Noun masculine plural construct",def:"stream, wadi, torrent valley"},
+  "שָׁמֶן":{d:"שָׁמֶן",root:"שׁ.מ.נ",lex:"שֶׁמֶן",stem:"—",form:"Noun",pgn:"ms absolute",parse:"Noun masculine singular absolute",def:"oil, olive oil, fat"},
+  "אֶתֵּן":{d:"אֶתֵּן",root:"נ.ת.נ",lex:"נָתַן",stem:"Qal",form:"Imperfect",pgn:"1cs",parse:"Qal Imperfect 1st common singular",def:"to give, put, place, set"},
+  "בְּכוֹרִי":{d:"בְּכוֹרִי",root:"ב.כ.ר",lex:"בְּכוֹר",stem:"—",form:"Noun",pgn:"ms + 1cs suffix",parse:"Noun masculine singular + 1st common singular suffix",def:"firstborn"},
+  "פִּשְׁעִי":{d:"פִּשְׁעִי",root:"פ.שׁ.ע",lex:"פֶּשַׁע",stem:"—",form:"Noun",pgn:"ms + 1cs suffix",parse:"Noun masculine singular + 1st common singular suffix",def:"transgression, rebellion, revolt"},
+  "פְּרִי":{d:"פְּרִי",root:"פ.ר.ה",lex:"פְּרִי",stem:"—",form:"Noun",pgn:"ms construct",parse:"Noun masculine singular construct",def:"fruit, offspring, product"},
+  "בִטְנִי":{d:"בִטְנִי",root:"ב.ט.נ",lex:"בֶּטֶן",stem:"—",form:"Noun",pgn:"fs + 1cs suffix",parse:"Noun feminine singular + 1st common singular suffix",def:"womb, belly, body"},
+  "חַטַּאת":{d:"חַטַּאת",root:"ח.ט.א",lex:"חַטָּאת",stem:"—",form:"Noun",pgn:"fs construct",parse:"Noun feminine singular construct",def:"sin, sin offering, purification offering"},
+  "נַפְשִׁי":{d:"נַפְשִׁי",root:"נ.פ.שׁ",lex:"נֶפֶשׁ",stem:"—",form:"Noun",pgn:"fs + 1cs suffix",parse:"Noun feminine singular + 1st common singular suffix",def:"soul, life, being, person, appetite"},
+  "הִגִּיד":{d:"הִגִּיד",root:"נ.ג.ד",lex:"נָגַד",stem:"Hiphil",form:"Perfect",pgn:"3ms",parse:"Hiphil Perfect 3rd masculine singular",def:"to declare, tell, report, announce, make known"},
+  "אָדָם":{d:"אָדָם",root:"א.ד.מ",lex:"אָדָם",stem:"—",form:"Noun",pgn:"ms absolute",parse:"Noun masculine singular absolute",def:"man, human being, humankind, Adam"},
+  "טּוֹב":{d:"טּוֹב",root:"ט.ו.ב",lex:"טוֹב",stem:"—",form:"Adjective",pgn:"ms",parse:"Adjective masculine singular",def:"good, pleasant, well, beneficial"},
+  "דּוֹרֵשׁ":{d:"דּוֹרֵשׁ",root:"ד.ר.שׁ",lex:"דָּרַשׁ",stem:"Qal",form:"Participle",pgn:"ms active",parse:"Qal Participle masculine singular active",def:"to seek, require, demand, inquire of"},
+  "עֲשׂוֹת":{d:"עֲשׂוֹת",root:"ע.שׂ.ה",lex:"עָשָׂה",stem:"Qal",form:"Infinitive Construct",pgn:"—",parse:"Qal Infinitive Construct",def:"to do, make, perform, act"},
+  "מִשְׁפָּט":{d:"מִשְׁפָּט",root:"שׁ.פ.ט",lex:"מִשְׁפָּט",stem:"—",form:"Noun",pgn:"ms absolute",parse:"Noun masculine singular absolute",def:"justice, judgment, legal right, ordinance, custom"},
+  "אַהֲבַת":{d:"אַהֲבַת",root:"א.ה.ב",lex:"אַהֲבָה",stem:"—",form:"Noun",pgn:"fs construct",parse:"Noun feminine singular construct",def:"love, affection (love of...)"},
+  "חֶסֶד":{d:"חֶסֶד",root:"ח.ס.ד",lex:"חֶסֶד",stem:"—",form:"Noun",pgn:"ms absolute",parse:"Noun masculine singular absolute",def:"steadfast love, lovingkindness, loyalty, covenant faithfulness"},
+  "הַצְנֵעַ":{d:"הַצְנֵעַ",root:"צ.נ.ע",lex:"צָנַע",stem:"Hiphil",form:"Infinitive Construct",pgn:"—",parse:"Hiphil Infinitive Construct",def:"to be humble, modest; to walk humbly"},
+  "לֶכֶת":{d:"לֶכֶת",root:"ה.ל.כ",lex:"הָלַךְ",stem:"Qal",form:"Infinitive Construct",pgn:"—",parse:"Qal Infinitive Construct",def:"to walk, go, travel, live"},
+  "אֱלֹהֶיךָ":{d:"אֱלֹהֶיךָ",root:"א.ל.ה",lex:"אֱלֹהִים",stem:"—",form:"Noun",pgn:"mp + 2ms suffix",parse:"Noun masculine plural + 2nd masculine singular suffix",def:"God, gods, divine being (your God)"}
+};
 
-  let deck = [...cards];
-  let idx = 0;
-  let isFlipped = false;
+function openWord(key){
+  const d=LEX[key]; if(!d) return;
+  document.getElementById('m-word').textContent=d.d;
+  document.getElementById('m-lex').innerHTML='Lexical: <span>'+d.lex+'</span>';
+  document.getElementById('m-root').textContent=d.root;
+  document.getElementById('m-stem').textContent=d.stem;
+  document.getElementById('m-form').textContent=d.form;
+  document.getElementById('m-pgn').textContent=d.pgn;
+  document.getElementById('m-parse').textContent=d.parse;
+  document.getElementById('m-def').textContent=d.def;
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal(e){
+  if(!e||e.target===document.getElementById('overlay')) document.getElementById('overlay').classList.remove('open');
+}
+document.querySelectorAll('.hw').forEach(el=>el.addEventListener('click',()=>openWord(el.dataset.w)));
 
-  function renderCard() {
-    const c = deck[idx];
-    document.getElementById('fc-hebrew').textContent = c.hebrew;
-    document.getElementById('fc-meaning').textContent = c.meaning;
-    document.getElementById('fc-trans').textContent = c.trans;
-    const ex = c.example.split('\n');
-    document.getElementById('fc-example').innerHTML = ex[0] + (ex[1] ? '<br><span style="font-style:italic;font-size:11px;direction:ltr;display:block;text-align:center">' + ex[1] + '</span>' : '');
-    document.getElementById('fc-progress').textContent = (idx + 1) + ' / ' + deck.length;
-    document.getElementById('fc-bar').style.width = ((idx + 1) / deck.length * 100) + '%';
-    if (isFlipped) {
-      document.getElementById('fc-inner').classList.add('flipped');
-    } else {
-      document.getElementById('fc-inner').classList.remove('flipped');
-    }
-  }
+// ── VOCAB ──
+const WORDS=[
+  {h:"שָׁמַע",tr:"sha-MA",r:"שׁ.מ.ע",pos:"verb",mean:"to hear / listen / obey",key:"שִׁמְעוּ"},
+  {h:"קוּם",tr:"kum",r:"ק.ו.מ",pos:"verb",mean:"to arise / rise up",key:"קוּם"},
+  {h:"רִיב",tr:"riv",r:"ר.י.ב",pos:"noun ms",mean:"dispute / legal case",key:"רִיב"},
+  {h:"הַר",tr:"har",r:"ה.ר.ר",pos:"noun ms",mean:"mountain / hill",key:"הָרִים"},
+  {h:"גִּבְעָה",tr:"giv-AH",r:"ג.ב.ע",pos:"noun fs",mean:"hill",key:"הַגְּבָעוֹת"},
+  {h:"עַם",tr:"am",r:"ע.מ.מ",pos:"noun ms",mean:"people / nation",key:"עַמִּי"},
+  {h:"אֶרֶץ",tr:"E-retz",r:"א.ר.ץ",pos:"noun fs",mean:"land / earth",key:"אָרֶץ"},
+  {h:"עָנָה",tr:"a-NAH",r:"ע.נ.ה",pos:"verb",mean:"to answer / respond / testify",key:"עֲנֵה"},
+  {h:"עָשָׂה",tr:"a-SAH",r:"ע.שׂ.ה",pos:"verb",mean:"to do / make / perform",key:"עָשִׂיתִי"},
+  {h:"עָלָה",tr:"a-LAH",r:"ע.ל.ה",pos:"verb (Hiphil)",mean:"to go up; Hiph: bring up / cause to ascend",key:"הֶעֱלִתִיךָ"},
+  {h:"עֶבֶד",tr:"E-ved",r:"ע.ב.ד",pos:"noun ms",mean:"slave / servant",key:"עֲבָדִים"},
+  {h:"שָׁלַח",tr:"sha-LAKH",r:"שׁ.ל.ח",pos:"verb",mean:"to send / stretch out",key:"וָאֶשְׁלַח"},
+  {h:"פָּדָה",tr:"pa-DAH",r:"פ.ד.ה",pos:"verb",mean:"to redeem / ransom / deliver",key:"פְּדִיתִיךָ"},
+  {h:"זָכַר",tr:"za-KHAR",r:"ז.כ.ר",pos:"verb",mean:"to remember / recall",key:"זְכָר"},
+  {h:"יָעַץ",tr:"ya-ATS",r:"י.ע.ץ",pos:"verb",mean:"to counsel / advise / plan",key:"יָּעַץ"},
+  {h:"מֶלֶךְ",tr:"ME-lekh",r:"מ.ל.כ",pos:"noun ms",mean:"king / ruler",key:"מֶלֶךְ"},
+  {h:"יָדַע",tr:"ya-DA",r:"י.ד.ע",pos:"verb",mean:"to know / understand / perceive",key:"דַּעַת"},
+  {h:"צְדָקָה",tr:"tz'da-KAH",r:"צ.ד.ק",pos:"noun fs",mean:"righteousness / righteous acts",key:"צִדְקוֹת"},
+  {h:"עוֹלָה",tr:"o-LAH",r:"ע.ל.ה",pos:"noun fs",mean:"burnt offering",key:"עוֹלוֹת"},
+  {h:"עֵגֶל",tr:"E-gel",r:"ע.ג.ל",pos:"noun ms",mean:"calf / young bull / yearling",key:"עֲגָלִים"},
+  {h:"רָצָה",tr:"ra-TZAH",r:"ר.צ.ה",pos:"verb",mean:"to be pleased / accept / delight in",key:"יִרְצֶה"},
+  {h:"אַיִל",tr:"A-yil",r:"א.י.ל",pos:"noun ms",mean:"ram / male sheep",key:"אֵילִים"},
+  {h:"שֶׁמֶן",tr:"SHE-men",r:"שׁ.מ.נ",pos:"noun ms",mean:"oil / olive oil / fat",key:"שָׁמֶן"},
+  {h:"בְּכוֹר",tr:"b'KHOR",r:"ב.כ.ר",pos:"noun ms",mean:"firstborn",key:"בְּכוֹרִי"},
+  {h:"פֶּשַׁע",tr:"PE-sha",r:"פ.שׁ.ע",pos:"noun ms",mean:"transgression / rebellion / revolt",key:"פִּשְׁעִי"},
+  {h:"חַטָּאת",tr:"khat-TAT",r:"ח.ט.א",pos:"noun fs",mean:"sin / sin offering / purification offering",key:"חַטַּאת"},
+  {h:"נֶפֶשׁ",tr:"NE-fesh",r:"נ.פ.שׁ",pos:"noun fs",mean:"soul / life / being / person",key:"נַפְשִׁי"},
+  {h:"נָגַד",tr:"na-GAD",r:"נ.ג.ד",pos:"verb (Hiphil הִגִּיד)",mean:"to declare / announce / tell / report",key:"הִגִּיד"},
+  {h:"אָדָם",tr:"a-DAM",r:"א.ד.מ",pos:"noun ms",mean:"man / human being / humankind",key:"אָדָם"},
+  {h:"טוֹב",tr:"tov",r:"ט.ו.ב",pos:"adj ms",mean:"good / pleasant / beneficial",key:"טּוֹב"},
+  {h:"דָּרַשׁ",tr:"da-RASH",r:"ד.ר.שׁ",pos:"verb",mean:"to seek / require / demand / inquire",key:"דּוֹרֵשׁ"},
+  {h:"מִשְׁפָּט",tr:"mish-PAT",r:"שׁ.פ.ט",pos:"noun ms",mean:"justice / judgment / legal right",key:"מִשְׁפָּט"},
+  {h:"אַהֲבָה",tr:"a-ha-VAH",r:"א.ה.ב",pos:"noun fs",mean:"love / affection",key:"אַהֲבַת"},
+  {h:"חֶסֶד",tr:"HE-sed",r:"ח.ס.ד",pos:"noun ms",mean:"steadfast love / lovingkindness / loyalty",key:"חֶסֶד"},
+  {h:"צָנַע",tr:"tza-NA",r:"צ.נ.ע",pos:"verb (Hiphil הַצְנֵעַ)",mean:"to be humble / walk humbly",key:"הַצְנֵעַ"},
+  {h:"הָלַךְ",tr:"ha-LAKH",r:"ה.ל.כ",pos:"verb",mean:"to walk / go / travel / live",key:"לֶכֶת"}
+];
 
-  function flipCard() {
-    isFlipped = !isFlipped;
-    document.getElementById('fc-inner').classList.toggle('flipped');
-  }
+const vg=document.getElementById('vgrid');
+WORDS.forEach(w=>{
+  const c=document.createElement('div');
+  c.className='vc2';
+  c.innerHTML=`<div class="vh">${w.h}</div><div class="vroot">Root: ${w.r}</div><div class="vtrans">${w.tr}</div><div class="vmean">${w.mean}</div><div class="vtags"><span class="vtag">${w.pos}</span></div>`;
+  if(w.key&&LEX[w.key]) c.addEventListener('click',()=>openWord(w.key));
+  vg.appendChild(c);
+});
 
-  function nextCard() {
-    isFlipped = false;
-    idx = (idx + 1) % deck.length;
-    renderCard();
-  }
+// ── FLASHCARDS ──
+const FCDATA=WORDS.map(w=>({
+  heb:w.h,mean:w.mean,trans:w.tr,
+  parse:w.key&&LEX[w.key]?LEX[w.key].parse:'',
+  ex:w.key&&LEX[w.key]?LEX[w.key].d:''
+}));
+let deck=[...FCDATA],fi=0,ffl=false;
+function renderFC(){
+  const c=deck[fi];
+  document.getElementById('fc-heb').textContent=c.heb;
+  document.getElementById('fc-mean').textContent=c.mean;
+  document.getElementById('fc-trans').textContent=c.trans;
+  document.getElementById('fc-parse').textContent=c.parse;
+  document.getElementById('fc-ex').textContent=c.ex?'From passage: '+c.ex:'';
+  document.getElementById('fcp').textContent=(fi+1)+' / '+deck.length;
+  document.getElementById('fcb').style.width=((fi+1)/deck.length*100)+'%';
+  document.getElementById('fcin').classList.toggle('flipped',ffl);
+}
+function flip(){ffl=!ffl;document.getElementById('fcin').classList.toggle('flipped');}
+function nextC(){ffl=false;fi=(fi+1)%deck.length;renderFC();}
+function prevC(){ffl=false;fi=(fi-1+deck.length)%deck.length;renderFC();}
+function shuffle(){ffl=false;fi=0;deck=[...FCDATA].sort(()=>Math.random()-.5);renderFC();}
+function resetFC(){ffl=false;fi=0;deck=[...FCDATA];renderFC();}
+renderFC();
 
-  function prevCard() {
-    isFlipped = false;
-    idx = (idx - 1 + deck.length) % deck.length;
-    renderCard();
-  }
-
-  function shuffleCards() {
-    isFlipped = false;
-    idx = 0;
-    deck = [...cards].sort(() => Math.random() - 0.5);
-    renderCard();
-  }
-
-  function resetCards() {
-    isFlipped = false;
-    idx = 0;
-    deck = [...cards];
-    renderCard();
-  }
-
-  renderCard();
+// ── STORIES ──
+function showStory(n,btn){
+  document.querySelectorAll('.spanel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sp-'+n).classList.add('active');
+  btn.classList.add('active');
+}
+function tt(btn,id){
+  const el=document.getElementById(id);
+  const vis=el.classList.toggle('vis');
+  btn.textContent=vis?'Hide ▴':'Show ▾';
+}
+function showAll(n){
+  document.querySelectorAll('#sp-'+n+' .shidden').forEach(el=>{el.classList.add('vis');});
+  document.querySelectorAll('#sp-'+n+' .ttbtn').forEach(b=>{b.textContent='Hide ▴';});
+}
+function hideAll(n){
+  document.querySelectorAll('#sp-'+n+' .shidden').forEach(el=>{el.classList.remove('vis');});
+  document.querySelectorAll('#sp-'+n+' .ttbtn').forEach(b=>{b.textContent='Show ▾';});
+}
 </script>
 </body>
 </html>

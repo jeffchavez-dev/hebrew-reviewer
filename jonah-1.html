@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jonah 1 | Hebrew Lesson</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3350;
+      --accent: #7c6af7;
+      --accent2: #5bc8af;
+      --gold: #e8b84b;
+      --text: #e8eaf0;
+      --muted: #8890aa;
+      --radius: 14px;
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+    .nav-logo { font-size: 20px; font-weight: 700; color: var(--gold); padding: 14px 0; margin-right: 12px; letter-spacing: 1px; }
+    .nav-back { font-size: 13px; color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); margin-right: 8px; transition: all 0.2s; }
+    .nav-back:hover { color: var(--text); border-color: var(--accent); }
+    .nav-btn { background: none; border: none; color: var(--muted); cursor: pointer; padding: 10px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; transition: all 0.2s; border-bottom: 2px solid transparent; }
+    .nav-btn:hover { color: var(--text); background: var(--surface2); }
+    .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: none; }
+
+    .section { display: none; padding: 32px 24px; max-width: 900px; margin: 0 auto; }
+    .section.active { display: block; }
+    h1 { font-size: 28px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+    .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+
+    /* PASSAGE */
+    .passage-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .verse { display: flex; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .verse:last-child { border-bottom: none; }
+    .verse-num { min-width: 28px; height: 28px; background: var(--accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 6px; }
+    .verse-content { flex: 1; }
+    .verse-hebrew { font-size: 20px; line-height: 2; direction: rtl; text-align: right; color: var(--text); margin-bottom: 8px; }
+    .verse-english { font-size: 13px; color: var(--muted); line-height: 1.6; font-style: italic; }
+
+    /* VOCABULARY */
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .vocab-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
+    .vocab-card:hover { transform: translateY(-2px); box-shadow: var(--card-shadow); border-color: var(--accent); }
+    .vocab-card.review { border-color: rgba(91,200,175,0.3); }
+    .vocab-hebrew { font-size: 28px; direction: rtl; color: var(--gold); margin-bottom: 4px; line-height: 1.5; }
+    .vocab-trans { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-style: italic; }
+    .vocab-meaning { font-size: 15px; font-weight: 600; color: var(--text); }
+    .vocab-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .vocab-tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--surface2); color: var(--accent2); border: 1px solid var(--border); }
+    .vocab-tag.review { color: #e8b84b; background: rgba(232,184,75,0.08); border-color: rgba(232,184,75,0.25); }
+
+    /* FLASHCARDS */
+    .flashcard-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .btn { padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { filter: brightness(1.15); }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+    .progress-text { color: var(--muted); font-size: 14px; margin-left: auto; }
+    .progress-bar-wrap { background: var(--surface2); border-radius: 20px; height: 6px; margin-bottom: 24px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 20px; transition: width 0.4s; }
+
+    .flashcard-scene { perspective: 1000px; margin: 0 auto 28px; width: 100%; max-width: 520px; height: 280px; }
+    .flashcard-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.5s; cursor: pointer; }
+    .flashcard-inner.flipped { transform: rotateY(180deg); }
+    .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px; border: 1px solid var(--border); box-shadow: var(--card-shadow); }
+    .flashcard-front { background: linear-gradient(135deg, #1e2240, #2a2d4a); }
+    .flashcard-back { background: linear-gradient(135deg, #1e2f35, #1a2e28); transform: rotateY(180deg); }
+    .card-hebrew { font-size: 52px; direction: rtl; color: var(--gold); margin-bottom: 10px; line-height: 1.3; }
+    .card-hint { font-size: 13px; color: var(--muted); }
+    .card-meaning { font-size: 26px; font-weight: 700; color: var(--accent2); margin-bottom: 6px; text-align: center; }
+    .card-trans { font-size: 15px; color: var(--muted); font-style: italic; margin-bottom: 12px; }
+    .card-example { font-size: 13px; color: var(--muted); text-align: center; direction: rtl; line-height: 1.8; }
+    .card-review-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: rgba(232,184,75,0.12); color: var(--gold); border: 1px solid rgba(232,184,75,0.3); margin-top: 8px; }
+    .flashcard-nav { display: flex; justify-content: center; gap: 16px; }
+
+    /* STORIES */
+    .story-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .story-tab { padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    .story-tab:hover { color: var(--text); }
+    .story-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .story-panel { display: none; }
+    .story-panel.active { display: block; }
+    .story-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; }
+    .story-title { font-size: 20px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+    .story-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .story-sentence { margin-bottom: 18px; padding: 16px 20px; background: var(--surface2); border-radius: 10px; border-left: 3px solid var(--accent); }
+    .sent-hebrew { font-size: 20px; direction: rtl; text-align: right; color: var(--text); margin-bottom: 6px; line-height: 1.9; }
+    .sent-trans { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 3px; }
+    .sent-english { font-size: 14px; color: var(--text); margin-bottom: 8px; }
+    .sent-footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .sent-words { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+    .word-chip { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: rgba(124,106,247,0.12); color: var(--accent); border: 1px solid rgba(124,106,247,0.25); }
+    .word-chip.micah { background: rgba(91,200,175,0.1); color: var(--accent2); border-color: rgba(91,200,175,0.25); }
+    .binyan-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; background: rgba(232,184,75,0.1); color: var(--gold); border: 1px solid rgba(232,184,75,0.25); white-space: nowrap; }
+
+    @media (max-width: 600px) {
+      .vocab-grid { grid-template-columns: 1fr 1fr; }
+      .card-hebrew { font-size: 38px; }
+      .card-meaning { font-size: 20px; }
+      .section { padding: 20px 14px; }
+      .story-card { padding: 20px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">← All Lessons</a>
+  <div class="nav-logo">יוֹנָה א׳</div>
+  <button class="nav-btn active" onclick="showSection('passage', this)">📖 Passage</button>
+  <button class="nav-btn" onclick="showSection('vocab', this)">📚 Vocabulary</button>
+  <button class="nav-btn" onclick="showSection('flashcards', this)">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showSection('stories', this)">📜 Stories</button>
+</nav>
+
+<!-- ═══════════════════════ PASSAGE ═══════════════════════ -->
+<div id="section-passage" class="section active">
+  <h1>Jonah 1</h1>
+  <p class="subtitle">יוֹנָה א׳ &nbsp;·&nbsp; Jonah's Call & Flight — The Storm at Sea</p>
+
+  <div class="passage-box">
+    <div class="verse">
+      <div class="verse-num">1</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיְהִי דְּבַר־יְהוָה אֶל־יוֹנָה בֶן־אֲמִתַּי לֵאמֹר׃</div>
+        <div class="verse-english">Now the word of the LORD came to Jonah the son of Amittai, saying:</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">2</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">קוּם לֵךְ אֶל־נִינְוֵה הָעִיר הַגְּדוֹלָה וּקְרָא עָלֶיהָ כִּי־עָלְתָה רָעָתָם לְפָנָי׃</div>
+        <div class="verse-english">"Arise, go to Nineveh the great city and cry out against it, for their wickedness has come up before Me."</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">3</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיָּקָם יוֹנָה לִבְרֹחַ תַּרְשִׁישָׁה מִלִּפְנֵי יְהוָה וַיֵּרֶד יָפוֹ וַיִּמְצָא אֳנִיָּה בָּאָה תַרְשִׁישׁ וַיִּתֵּן שְׂכָרָהּ וַיֵּרֶד בָּהּ לָבוֹא עִמָּהֶם תַּרְשִׁישָׁה מִלִּפְנֵי יְהוָה׃</div>
+        <div class="verse-english">But Jonah arose to flee to Tarshish from the presence of the LORD. He went down to Jaffa, found a ship going to Tarshish, paid the fare, and went down into it to go with them to Tarshish — away from the presence of the LORD.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">4</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיהוָה הֵטִיל רוּחַ־גְּדוֹלָה אֶל־הַיָּם וַיְהִי סַעַר־גָּדוֹל בַּיָּם וְהָאֳנִיָּה חִשְּׁבָה לְהִשָּׁבֵר׃</div>
+        <div class="verse-english">But the LORD hurled a great wind over the sea, and there was a great storm on the sea so that the ship was about to break up.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">5</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיִּירְאוּ הַמַּלָּחִים וַיִּזְעֲקוּ אִישׁ אֶל־אֱלֹהָיו וַיָּטִלוּ אֶת־הַכֵּלִים אֲשֶׁר בָּאֳנִיָּה אֶל־הַיָּם לְהָקֵל מֵעֲלֵיהֶם וְיוֹנָה יָרַד אֶל־יַרְכְּתֵי הַסְּפִינָה וַיִּשְׁכַּב וַיֵּרָדַם׃</div>
+        <div class="verse-english">Then the sailors became afraid, and every man cried to his god. They threw the cargo into the sea to lighten it for them. But Jonah had gone below into the hold of the ship, lay down, and fell into a deep sleep.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">6</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיִּקְרַב אֵלָיו רַב הַחֹבֵל וַיֹּאמֶר לוֹ מַה־לְּךָ נִרְדָּם קוּם קְרָא אֶל־אֱלֹהֶיךָ אוּלַי יִתְעַשֵּׁת הָאֱלֹהִים לָנוּ וְלֹא נֹאבֵד׃</div>
+        <div class="verse-english">So the captain came to him and said, "How is it that you are sleeping? Get up, call on your God! Perhaps the God will be concerned about us so that we will not perish."</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">7</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיֹּאמְרוּ אִישׁ אֶל־רֵעֵהוּ לְכוּ וְנַפִּילָה גּוֹרָלוֹת וְנֵדְעָה בְּשֶׁלְּמִי הָרָעָה הַזֹּאת לָנוּ וַיַּפִּילוּ גּוֹרָלוֹת וַיִּפֹּל הַגּוֹרָל עַל־יוֹנָה׃</div>
+        <div class="verse-english">Each man said to his companion, "Come, let us cast lots so that we may learn on whose account this calamity has struck us." So they cast lots and the lot fell on Jonah.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">8</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיֹּאמְרוּ אֵלָיו הַגִּידָה־נָּא לָנוּ בַּאֲשֶׁר לְמִי־הָרָעָה הַזֹּאת לָנוּ מַה־מְּלַאכְתְּךָ וּמֵאַיִן תָּבוֹא מָה אַרְצֶךָ וְאֵי־מִזֶּה עַם אָתָּה׃</div>
+        <div class="verse-english">So they said to him, "Tell us now! On whose account has this calamity struck us? What is your occupation? Where do you come from? What is your country? From what people are you?"</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">9</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיֹּאמֶר אֲלֵיהֶם עִבְרִי אָנֹכִי וְאֶת־יְהוָה אֱלֹהֵי הַשָּׁמַיִם אֲנִי יָרֵא אֲשֶׁר־עָשָׂה אֶת־הַיָּם וְאֶת־הַיַּבָּשָׁה׃</div>
+        <div class="verse-english">He said to them, "I am a Hebrew, and I fear the LORD God of heaven who made the sea and the dry land."</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">10</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיִּירְאוּ הָאֲנָשִׁים יִרְאָה גְדוֹלָה וַיֹּאמְרוּ אֵלָיו מַה־זֹּאת עָשִׂיתָ כִּי־יָדְעוּ הָאֲנָשִׁים כִּי־מִלִּפְנֵי יְהוָה הוּא בֹרֵחַ כִּי הִגִּיד לָהֶם׃</div>
+        <div class="verse-english">Then the men became extremely frightened and they said to him, "How could you do this?" For the men knew that he was fleeing from the presence of the LORD, because he had told them.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">11</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיֹּאמְרוּ אֵלָיו מַה־נַּעֲשֶׂה לָּךְ וְיִשְׁתֹּק הַיָּם מֵעָלֵינוּ כִּי הַיָּם הוֹלֵךְ וְסֹעֵר׃</div>
+        <div class="verse-english">"What should we do to you that the sea may become calm for us?" — for the sea was becoming increasingly stormy.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">12</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיֹּאמֶר אֲלֵיהֶם שָׂאוּנִי וַהֲטִילֻנִי אֶל־הַיָּם וְיִשְׁתֹּק הַיָּם מֵעֲלֵיכֶם כִּי יוֹדֵעַ אָנִי כִּי בְשֶׁלִּי הַסַּעַר הַגָּדוֹל הַזֶּה עֲלֵיכֶם׃</div>
+        <div class="verse-english">He said to them, "Pick me up and throw me into the sea. Then the sea will become calm for you, for I know that on account of me this great storm has come upon you."</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">13</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיַּחְתְּרוּ הָאֲנָשִׁים לְהָשִׁיב אֶל־הַיַּבָּשָׁה וְלֹא יָכֹלוּ כִּי הַיָּם הוֹלֵךְ וְסֹעֵר עֲלֵיהֶם׃</div>
+        <div class="verse-english">However, the men rowed desperately to return to land but they could not, for the sea was becoming even stormier against them.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">14</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיִּקְרְאוּ אֶל־יְהוָה וַיֹּאמְרוּ אָנָּה יְהוָה אַל־נָא נֹאבְדָה בְּנֶפֶשׁ הָאִישׁ הַזֶּה וְאַל־תִּתֵּן עָלֵינוּ דָּם נָקִיא כִּי־אַתָּה יְהוָה כַּאֲשֶׁר חָפַצְתָּ עָשִׂיתָ׃</div>
+        <div class="verse-english">Then they called on the LORD and said, "We earnestly pray, O LORD, do not let us perish on account of this man's life and do not put innocent blood on us; for You, O LORD, have done as You have pleased."</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">15</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיִּשְׂאוּ אֶת־יוֹנָה וַיְטִלֻהוּ אֶל־הַיָּם וַיַּעֲמֹד הַיָּם מִזַּעְפּוֹ׃</div>
+        <div class="verse-english">So they picked up Jonah and threw him into the sea, and the sea stopped its raging.</div>
+      </div>
+    </div>
+    <div class="verse">
+      <div class="verse-num">16</div>
+      <div class="verse-content">
+        <div class="verse-hebrew">וַיִּירְאוּ הָאֲנָשִׁים יִרְאָה גְדוֹלָה אֶת־יְהוָה וַיִּזְבְּחוּ־זֶבַח לַיהוָה וַיִּדְּרוּ נְדָרִים׃</div>
+        <div class="verse-english">Then the men feared the LORD greatly, and they offered a sacrifice to the LORD and made vows.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ VOCABULARY ═══════════════════════ -->
+<div id="section-vocab" class="section">
+  <h1>Vocabulary</h1>
+  <p class="subtitle">Key words from Jonah 1 — 20 terms · <span style="color:var(--gold)">★ = also in Micah 6</span></p>
+
+  <div class="vocab-grid">
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">דָּבָר</div>
+      <div class="vocab-trans">da-VAR</div>
+      <div class="vocab-meaning">word / matter / thing</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card review">
+      <div class="vocab-hebrew">קוּם</div>
+      <div class="vocab-trans">kum</div>
+      <div class="vocab-meaning">to rise / arise</div>
+      <div class="vocab-tags"><span class="vocab-tag">verb</span><span class="vocab-tag review">★ Micah 6:1</span></div>
+    </div>
+
+    <div class="vocab-card review">
+      <div class="vocab-hebrew">הָלַךְ</div>
+      <div class="vocab-trans">ha-LAKH</div>
+      <div class="vocab-meaning">to walk / go</div>
+      <div class="vocab-tags"><span class="vocab-tag">verb</span><span class="vocab-tag review">★ Micah 6:8</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">עִיר</div>
+      <div class="vocab-trans">ir</div>
+      <div class="vocab-meaning">city</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">גָּדוֹל</div>
+      <div class="vocab-trans">ga-DOL</div>
+      <div class="vocab-meaning">great / large</div>
+      <div class="vocab-tags"><span class="vocab-tag">adjective</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">קָרָא</div>
+      <div class="vocab-trans">ka-RA</div>
+      <div class="vocab-meaning">to call / proclaim / cry out</div>
+      <div class="vocab-tags"><span class="vocab-tag">verb</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">רָעָה</div>
+      <div class="vocab-trans">ra-AH</div>
+      <div class="vocab-meaning">evil / wickedness / calamity</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun / adj.</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">בָּרַח</div>
+      <div class="vocab-trans">ba-RAKH</div>
+      <div class="vocab-meaning">to flee / run away</div>
+      <div class="vocab-tags"><span class="vocab-tag">verb</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">יָרַד</div>
+      <div class="vocab-trans">ya-RAD</div>
+      <div class="vocab-meaning">to go down / descend</div>
+      <div class="vocab-tags"><span class="vocab-tag">verb</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">אֳנִיָּה</div>
+      <div class="vocab-trans">o-ni-YAH</div>
+      <div class="vocab-meaning">ship</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">רוּחַ</div>
+      <div class="vocab-trans">RU-akh</div>
+      <div class="vocab-meaning">wind / breath / spirit</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">יָם</div>
+      <div class="vocab-trans">yam</div>
+      <div class="vocab-meaning">sea</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">סַעַר</div>
+      <div class="vocab-trans">SA-ar</div>
+      <div class="vocab-meaning">storm / tempest</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">יָרֵא</div>
+      <div class="vocab-trans">ya-RE</div>
+      <div class="vocab-meaning">to fear / be afraid</div>
+      <div class="vocab-tags"><span class="vocab-tag">verb</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">זָעַק</div>
+      <div class="vocab-trans">za-AK</div>
+      <div class="vocab-meaning">to cry out / shout</div>
+      <div class="vocab-tags"><span class="vocab-tag">verb</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">גּוֹרָל</div>
+      <div class="vocab-trans">go-RAL</div>
+      <div class="vocab-meaning">lot (as in casting lots)</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">שָׁמַיִם</div>
+      <div class="vocab-trans">sha-MA-yim</div>
+      <div class="vocab-meaning">heavens / sky</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun pl.</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">יַבָּשָׁה</div>
+      <div class="vocab-trans">ya-ba-SHAH</div>
+      <div class="vocab-meaning">dry land / ground</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+    <div class="vocab-card review">
+      <div class="vocab-hebrew">נֶפֶשׁ</div>
+      <div class="vocab-trans">NE-fesh</div>
+      <div class="vocab-meaning">soul / life / person</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span><span class="vocab-tag review">★ Micah 6:7</span></div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-hebrew">זֶבַח</div>
+      <div class="vocab-trans">ZE-vakh</div>
+      <div class="vocab-meaning">sacrifice / offering</div>
+      <div class="vocab-tags"><span class="vocab-tag">noun</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════ FLASHCARDS ═══════════════════════ -->
+<div id="section-flashcards" class="section">
+  <h1>Flashcards</h1>
+  <p class="subtitle">Click the card to flip · Gold star = also appears in Micah 6</p>
+
+  <div class="flashcard-controls">
+    <button class="btn btn-secondary" onclick="shuffleCards()">🔀 Shuffle</button>
+    <button class="btn btn-secondary" onclick="resetCards()">↺ Reset</button>
+    <span class="progress-text" id="fc-progress">1 / 20</span>
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="fc-bar" style="width: 5%"></div>
+  </div>
+
+  <div class="flashcard-scene" onclick="flipCard()">
+    <div class="flashcard-inner" id="fc-inner">
+      <div class="flashcard-face flashcard-front">
+        <div class="card-hebrew" id="fc-hebrew">דָּבָר</div>
+        <div class="card-hint">tap to reveal</div>
+      </div>
+      <div class="flashcard-face flashcard-back">
+        <div class="card-meaning" id="fc-meaning">word / matter</div>
+        <div class="card-trans" id="fc-trans">da-VAR</div>
+        <div class="card-example" id="fc-example"></div>
+        <div id="fc-review-badge" style="display:none" class="card-review-badge">★ also in Micah 6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-nav">
+    <button class="btn btn-secondary" onclick="prevCard()">← Prev</button>
+    <button class="btn btn-primary" onclick="nextCard()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════ STORIES ═══════════════════════ -->
+<div id="section-stories" class="section">
+  <h1>Stories</h1>
+  <p class="subtitle">Three stories using Jonah 1 vocabulary · mixed with Micah 6 · binyanim labeled in gold</p>
+
+  <div class="story-tabs">
+    <button class="story-tab active" onclick="showStory(1, this)">Story 1: Jonah Flees</button>
+    <button class="story-tab" onclick="showStory(2, this)">Story 2: The Great Storm</button>
+    <button class="story-tab" onclick="showStory(3, this)">Story 3: The Sailors Fear God</button>
+  </div>
+
+  <!-- STORY 1 -->
+  <div class="story-panel active" id="story-1">
+    <div class="story-card">
+      <div class="story-title">יוֹנָה בּוֹרֵחַ — Jonah Flees</div>
+      <div class="story-subtitle">Qal focus · Simple active sentences · Jonah receives a command and runs</div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">אֱלֹהִים דִּבֶּר אֶל יוֹנָה וְאָמַר: קוּם וָלֵךְ אֶל הָעִיר.</div>
+        <div class="sent-trans">Elohim diber el Yonah v'amar: Kum va-lekh el ha-ir.</div>
+        <div class="sent-english">God spoke to Jonah and said: "Arise and go to the city."</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">קוּם — arise</span><span class="word-chip">הָלַךְ — go</span><span class="word-chip">עִיר — city</span></div>
+          <span class="binyan-badge">Qal · Piel (דִּבֶּר)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יוֹנָה לֹא רָצָה לָלֶכֶת. הוּא יָרֵא מִן הָרָעָה.</div>
+        <div class="sent-trans">Yonah lo ratzah lalekhet. Hu yare min ha-ra'ah.</div>
+        <div class="sent-english">Jonah did not want to go. He was afraid of the wickedness.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">הָלַךְ — go</span><span class="word-chip">יָרֵא — fear</span><span class="word-chip">רָעָה — evil</span></div>
+          <span class="binyan-badge">Qal</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יוֹנָה קָם וּבָרַח מִלִּפְנֵי יְהוָה.</div>
+        <div class="sent-trans">Yonah kam u-varakh mi-lifnei Adonai.</div>
+        <div class="sent-english">Jonah arose and fled from before the LORD.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">קוּם — arise</span><span class="word-chip">בָּרַח — flee</span></div>
+          <span class="binyan-badge">Qal</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">הוּא יָרַד אֶל הַיָּם וּמָצָא אֳנִיָּה גְּדוֹלָה.</div>
+        <div class="sent-trans">Hu yarad el ha-yam u-matza oniyyah g'dolah.</div>
+        <div class="sent-english">He went down to the sea and found a great ship.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָרַד — descend</span><span class="word-chip">יָם — sea</span><span class="word-chip">אֳנִיָּה — ship</span><span class="word-chip">גָּדוֹל — great</span></div>
+          <span class="binyan-badge">Qal</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יוֹנָה יָרַד אֶל תּוֹךְ הַסְּפִינָה וַיִּשְׁכַּב וַיִּישַׁן.</div>
+        <div class="sent-trans">Yonah yarad el tokh ha-s'finah va-yishkav va-yishan.</div>
+        <div class="sent-english">Jonah went down into the hold of the ship, lay down, and slept.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָרַד — descend</span><span class="word-chip">אֳנִיָּה — ship</span></div>
+          <span class="binyan-badge">Qal</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">אָדָם הַבּוֹרֵחַ מֵאֱלֹהִים לֹא יִמְצָא שָׁלוֹם.</div>
+        <div class="sent-trans">Adam ha-boreach me-Elohim lo yimtza shalom.</div>
+        <div class="sent-english">The man who flees from God will not find peace.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">בָּרַח — flee</span><span class="word-chip micah">אָדָם — man (Micah 6:8)</span></div>
+          <span class="binyan-badge">Qal participle</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STORY 2 -->
+  <div class="story-panel" id="story-2">
+    <div class="story-card">
+      <div class="story-title">הַסַּעַר הַגָּדוֹל — The Great Storm</div>
+      <div class="story-subtitle">Hiphil & Niphal focus · Causative and passive forms · God acts on the sea</div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יְהוָה הֵטִיל רוּחַ גְּדוֹלָה אֶל הַיָּם.</div>
+        <div class="sent-trans">Adonai hetil ruakh g'dolah el ha-yam.</div>
+        <div class="sent-english">The LORD hurled a great wind upon the sea.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">רוּחַ — wind</span><span class="word-chip">יָם — sea</span><span class="word-chip">גָּדוֹל — great</span></div>
+          <span class="binyan-badge">Hiphil (הֵטִיל)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">הַיָּם נִשְׁתַּעֵר מְאֹד וְהָאֳנִיָּה חִשְּׁבָה לְהִשָּׁבֵר.</div>
+        <div class="sent-trans">Ha-yam nishtaer m'od v'ha-oniyyah khishvah l'hishaver.</div>
+        <div class="sent-english">The sea raged greatly and the ship was about to be broken apart.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָם — sea</span><span class="word-chip">סַעַר — storm</span><span class="word-chip">אֳנִיָּה — ship</span></div>
+          <span class="binyan-badge">Niphal (הִשָּׁבֵר) · Hithpael (נִשְׁתַּעֵר)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">הַמַּלָּחִים הִשְׁלִיכוּ אֶת הַכֵּלִים אֶל הַיָּם לְהָקֵל.</div>
+        <div class="sent-trans">Ha-malakhim hishlikhu et ha-kelim el ha-yam l'hakel.</div>
+        <div class="sent-english">The sailors threw the cargo into the sea to lighten the load.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָם — sea</span></div>
+          <span class="binyan-badge">Hiphil (הִשְׁלִיכוּ · לְהָקֵל)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יוֹנָה אָמַר: שָׂאוּנִי וַהֲטִילֻנִי אֶל הַיָּם.</div>
+        <div class="sent-trans">Yonah amar: S'uni va-hatiluni el ha-yam.</div>
+        <div class="sent-english">Jonah said: "Lift me up and throw me into the sea."</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָם — sea</span></div>
+          <span class="binyan-badge">Qal imperative (שָׂאוּנִי) · Hiphil imperative (הֲטִילֻנִי)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">הֵם הִשְׁלִיכוּ אֹתוֹ וְהַיָּם הֻשְׁקַט.</div>
+        <div class="sent-trans">Hem hishlikhu oto v'ha-yam hushkat.</div>
+        <div class="sent-english">They threw him and the sea was quieted.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָם — sea</span></div>
+          <span class="binyan-badge">Hiphil · Hophal (הֻשְׁקַט — passive of Hiphil)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יְהוָה הֵשִׁיב אֶת הַשָּׁלוֹם לַיָּם — כִּי הוּא עָשָׂה מִשְׁפָּט.</div>
+        <div class="sent-trans">Adonai heshiv et ha-shalom la-yam — ki hu asah mishpat.</div>
+        <div class="sent-english">The LORD restored peace to the sea — for He had done justice.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָם — sea</span><span class="word-chip micah">מִשְׁפָּט — justice (Micah 6:8)</span></div>
+          <span class="binyan-badge">Hiphil (הֵשִׁיב) · Qal</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STORY 3 -->
+  <div class="story-panel" id="story-3">
+    <div class="story-card">
+      <div class="story-title">הַמַּלָּחִים יְרֵאִים — The Sailors Fear God</div>
+      <div class="story-subtitle">Mixed binyanim · Jonah + Micah 6 vocabulary · The sailors come to faith</div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">הַמַּלָּחִים יָרְאוּ יִרְאָה גְדוֹלָה אֶת יְהוָה.</div>
+        <div class="sent-trans">Ha-malakhim yar'u yir'ah g'dolah et Adonai.</div>
+        <div class="sent-english">The sailors feared the LORD with great fear.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָרֵא — fear</span><span class="word-chip">גָּדוֹל — great</span></div>
+          <span class="binyan-badge">Qal (cognate accusative)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">הֵם זָעֲקוּ אֶל יְהוָה אֱלֹהֵי הַשָּׁמַיִם.</div>
+        <div class="sent-trans">Hem za'aku el Adonai Elohei ha-shamayim.</div>
+        <div class="sent-english">They cried out to the LORD, the God of the heavens.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">זָעַק — cry out</span><span class="word-chip">שָׁמַיִם — heavens</span></div>
+          <span class="binyan-badge">Qal</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יוֹנָה הִגִּיד לָהֶם: אֲנִי עִבְרִי. אֲנִי יָרֵא אֶת יְהוָה.</div>
+        <div class="sent-trans">Yonah higid lahem: Ani Ivri. Ani yare et Adonai.</div>
+        <div class="sent-english">Jonah declared to them: "I am a Hebrew. I fear the LORD."</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">יָרֵא — fear</span></div>
+          <span class="binyan-badge">Hiphil (הִגִּיד) · Qal (יָרֵא)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">הַמַּלָּחִים זָבְחוּ זֶבַח לַיהוָה וַיִּדְּרוּ נְדָרִים.</div>
+        <div class="sent-trans">Ha-malakhim zavkhu zevakh la-Adonai va-yid'ru n'darim.</div>
+        <div class="sent-english">The sailors offered a sacrifice to the LORD and made vows.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip">זֶבַח — sacrifice</span></div>
+          <span class="binyan-badge">Qal (cognate accusative)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">יְהוָה דּוֹרֵשׁ מֵהֶם עֲשׂוֹת מִשְׁפָּט וְאַהֲבַת חֶסֶד.</div>
+        <div class="sent-trans">Adonai doresh mehem asot mishpat v'ahavat hesed.</div>
+        <div class="sent-english">The LORD requires of them to do justice and to love kindness.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip micah">מִשְׁפָּט — justice (Micah 6:8)</span><span class="word-chip micah">חֶסֶד — kindness (Micah 6:8)</span></div>
+          <span class="binyan-badge">Qal participle (דּוֹרֵשׁ)</span>
+        </div>
+      </div>
+
+      <div class="story-sentence">
+        <div class="sent-hebrew">נַפְשׁוֹת הַמַּלָּחִים נִצְּלוּ כִּי יְהוָה חָפֵץ בְּחֶסֶד לֹא בְזֶבַח.</div>
+        <div class="sent-trans">Nafshot ha-malakhim nitzel'u ki Adonai khafetz b'hesed lo v'zevakh.</div>
+        <div class="sent-english">The souls of the sailors were saved, for God delights in kindness — not in sacrifice.</div>
+        <div class="sent-footer">
+          <div class="sent-words"><span class="word-chip micah">נֶפֶשׁ — soul (Micah 6:7)</span><span class="word-chip micah">חֶסֶד — kindness (Micah 6:8)</span><span class="word-chip">זֶבַח — sacrifice</span></div>
+          <span class="binyan-badge">Niphal (נִצְּלוּ — were saved) · Qal (חָפֵץ)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function showStory(num, btn) {
+    document.querySelectorAll('.story-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.story-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('story-' + num).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  const cards = [
+    { hebrew: 'דָּבָר', trans: 'da-VAR', meaning: 'word / matter / thing', example: 'וַיְהִי דְּבַר־יְהוָה אֶל יוֹנָה\n"The word of the LORD came to Jonah"', review: false },
+    { hebrew: 'קוּם', trans: 'kum', meaning: 'to rise / arise', example: 'קוּם לֵךְ אֶל נִינְוֵה\n"Arise, go to Nineveh"', review: true },
+    { hebrew: 'הָלַךְ', trans: 'ha-LAKH', meaning: 'to walk / go', example: 'לֵךְ אֶל הָעִיר הַגְּדוֹלָה\n"Go to the great city"', review: true },
+    { hebrew: 'עִיר', trans: 'ir', meaning: 'city', example: 'נִינְוֵה הָעִיר הַגְּדוֹלָה\n"Nineveh the great city"', review: false },
+    { hebrew: 'גָּדוֹל', trans: 'ga-DOL', meaning: 'great / large', example: 'סַעַר גָּדוֹל בַּיָּם\n"A great storm on the sea"', review: false },
+    { hebrew: 'קָרָא', trans: 'ka-RA', meaning: 'to call / proclaim', example: 'קְרָא עָלֶיהָ\n"Cry out against it"', review: false },
+    { hebrew: 'רָעָה', trans: 'ra-AH', meaning: 'evil / wickedness / calamity', example: 'עָלְתָה רָעָתָם לְפָנָי\n"Their wickedness has come up before Me"', review: false },
+    { hebrew: 'בָּרַח', trans: 'ba-RAKH', meaning: 'to flee / run away', example: 'לִבְרֹחַ תַּרְשִׁישָׁה מִלִּפְנֵי יְהוָה\n"To flee to Tarshish from before the LORD"', review: false },
+    { hebrew: 'יָרַד', trans: 'ya-RAD', meaning: 'to go down / descend', example: 'וַיֵּרֶד יָפוֹ\n"And he went down to Jaffa"', review: false },
+    { hebrew: 'אֳנִיָּה', trans: 'o-ni-YAH', meaning: 'ship', example: 'וַיִּמְצָא אֳנִיָּה בָּאָה תַרְשִׁישׁ\n"He found a ship going to Tarshish"', review: false },
+    { hebrew: 'רוּחַ', trans: 'RU-akh', meaning: 'wind / breath / spirit', example: 'יְהוָה הֵטִיל רוּחַ גְּדוֹלָה\n"The LORD hurled a great wind"', review: false },
+    { hebrew: 'יָם', trans: 'yam', meaning: 'sea', example: 'סַעַר גָּדוֹל בַּיָּם\n"A great storm on the sea"', review: false },
+    { hebrew: 'סַעַר', trans: 'SA-ar', meaning: 'storm / tempest', example: 'הַסַּעַר הַגָּדוֹל הַזֶּה\n"This great storm"', review: false },
+    { hebrew: 'יָרֵא', trans: 'ya-RE', meaning: 'to fear / be afraid', example: 'וַיִּירְאוּ הַמַּלָּחִים\n"The sailors became afraid"', review: false },
+    { hebrew: 'זָעַק', trans: 'za-AK', meaning: 'to cry out / shout', example: 'וַיִּזְעֲקוּ אִישׁ אֶל אֱלֹהָיו\n"Each man cried out to his god"', review: false },
+    { hebrew: 'גּוֹרָל', trans: 'go-RAL', meaning: 'lot (casting lots)', example: 'וַיַּפִּילוּ גּוֹרָלוֹת\n"They cast lots"', review: false },
+    { hebrew: 'שָׁמַיִם', trans: 'sha-MA-yim', meaning: 'heavens / sky', example: 'יְהוָה אֱלֹהֵי הַשָּׁמַיִם\n"The LORD God of heaven"', review: false },
+    { hebrew: 'יַבָּשָׁה', trans: 'ya-ba-SHAH', meaning: 'dry land / ground', example: 'עָשָׂה אֶת הַיָּם וְאֶת הַיַּבָּשָׁה\n"Made the sea and the dry land"', review: false },
+    { hebrew: 'נֶפֶשׁ', trans: 'NE-fesh', meaning: 'soul / life / person', example: 'בְּנֶפֶשׁ הָאִישׁ הַזֶּה\n"On account of this man\'s life"', review: true },
+    { hebrew: 'זֶבַח', trans: 'ZE-vakh', meaning: 'sacrifice / offering', example: 'וַיִּזְבְּחוּ זֶבַח לַיהוָה\n"They offered a sacrifice to the LORD"', review: false },
+  ];
+
+  let deck = [...cards];
+  let idx = 0;
+  let isFlipped = false;
+
+  function renderCard() {
+    const c = deck[idx];
+    document.getElementById('fc-hebrew').textContent = c.hebrew;
+    document.getElementById('fc-meaning').textContent = c.meaning;
+    document.getElementById('fc-trans').textContent = c.trans;
+    const parts = c.example.split('\n');
+    document.getElementById('fc-example').innerHTML = parts[0] + (parts[1] ? '<br><span style="font-style:italic;font-size:11px;direction:ltr;display:block;text-align:center">' + parts[1] + '</span>' : '');
+    document.getElementById('fc-review-badge').style.display = c.review ? 'inline-block' : 'none';
+    document.getElementById('fc-progress').textContent = (idx + 1) + ' / ' + deck.length;
+    document.getElementById('fc-bar').style.width = ((idx + 1) / deck.length * 100) + '%';
+    document.getElementById('fc-inner').classList.toggle('flipped', isFlipped);
+  }
+
+  function flipCard() { isFlipped = !isFlipped; document.getElementById('fc-inner').classList.toggle('flipped'); }
+  function nextCard() { isFlipped = false; idx = (idx + 1) % deck.length; renderCard(); }
+  function prevCard() { isFlipped = false; idx = (idx - 1 + deck.length) % deck.length; renderCard(); }
+  function shuffleCards() { isFlipped = false; idx = 0; deck = [...cards].sort(() => Math.random() - 0.5); renderCard(); }
+  function resetCards() { isFlipped = false; idx = 0; deck = [...cards]; renderCard(); }
+
+  renderCard();
+</script>
+</body>
+</html>

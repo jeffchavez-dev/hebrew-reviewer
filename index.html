@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hebrew Reviewer</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3350;
+      --accent: #7c6af7;
+      --accent2: #5bc8af;
+      --gold: #e8b84b;
+      --text: #e8eaf0;
+      --muted: #8890aa;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 24px;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 56px;
+      text-align: center;
+    }
+
+    .book-section {
+      width: 100%;
+      max-width: 720px;
+      margin-bottom: 40px;
+    }
+
+    .book-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      padding-left: 4px;
+    }
+
+    .lesson-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      margin-bottom: 12px;
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.4);
+      border-color: var(--accent);
+    }
+
+    .lesson-ref {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 90px;
+    }
+
+    .lesson-info { flex: 1; }
+
+    .lesson-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .lesson-desc {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .lesson-hebrew {
+      font-size: 20px;
+      color: var(--gold);
+      direction: rtl;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(91,200,175,0.12);
+      color: var(--accent2);
+      border: 1px solid rgba(91,200,175,0.25);
+      white-space: nowrap;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">✡️</div>
+  <h1>Hebrew Reviewer</h1>
+  <p class="tagline">Interactive lessons for reading and studying Biblical Hebrew</p>
+
+  <div class="book-section">
+    <div class="book-label">Micah · מִיכָה</div>
+
+    <a href="micah-6-1-8.html" class="lesson-card">
+      <div class="lesson-ref">6:1–8</div>
+      <div class="lesson-info">
+        <div class="lesson-title">God's Case Against Israel</div>
+        <div class="lesson-desc">Flashcards · Vocabulary · Passage · 3 Stories</div>
+      </div>
+      <div class="lesson-hebrew">מִשְׁפָּט וָחֶסֶד</div>
+      <span class="badge">Ready</span>
+    </a>
+  </div>
+
+  <footer>More lessons coming soon · Hosea · Amos · Isaiah</footer>
+
+</body>
+</html>
